@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data (Never commit large raw data or sensitive user data to GitHub)
+data/
+
+# Model Weights (These are large binaries, generate them locally)
+assets/models/*.pkl
+
+# Visualizations (Optional to ignore if you want to show them off, but we will keep them tracked for the README)
+# assets/eval/*.png 
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# IDE specific files
+.vscode/
+.idea/
+.ipynb_checkpoints/
+
+# OS specific files
+.DS_Store
+Thumbs.db
