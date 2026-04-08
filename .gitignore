@@ -12,6 +12,12 @@ assets/models/*.pkl
 # Visualizations (Optional to ignore if you want to show them off, but we will keep them tracked for the README)
 # assets/eval/*.png 
 
+# Un-tracked random media/video files in assets root
+/assets/*.mp4
+/assets/*.jpeg
+/assets/*.jpg
+/assets/*.zip
+
 # Virtual Environments
 venv/
 env/
