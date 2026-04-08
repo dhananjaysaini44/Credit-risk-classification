@@ -31,3 +31,6 @@ env/
 # OS specific files
 .DS_Store
 Thumbs.db
+
+# Jupyter Notebook drafts
+notebooks/Project.ipynb

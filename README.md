@@ -1,4 +1,4 @@
-# Credit Risk Classification Project
+# Credit Risk Classification
 
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?logo=scikit-learn&logoColor=white)
 
