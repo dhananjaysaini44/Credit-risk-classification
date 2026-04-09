@@ -36,6 +36,7 @@ Our mathematical analysis concludes that the **Default (0.50)** probability thre
 By analyzing the Precision-Recall trade-off, we identified an **Optimal Threshold of 0.40**, which maximizes the **F1-Score (0.30)** while maintaining an aggressive catch-rate for defaults.
 
 ![F1 Optimization Curve](assets/eval/f1_optimization.png)
+![Logistic Regression v2 Confusion Matrix](assets/eval/Logistic_Regression_v2_cm_0.4.png)
 
 | Factor | Baseline (0.50) | Optimized (0.40) | Impact |
 | :--- | :--- | :--- | :--- |
