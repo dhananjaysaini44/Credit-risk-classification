@@ -10,12 +10,12 @@ Before writing a single line of ML code, we must look at our data. We call this 
 ### The Problem: Weak Correlation
 In a perfect project, `Credit_Score` might have a 0.90 correlation with `Default`. In our data, it is much lower. 
 
-![Correlation Matrix](assets/eda/correlation_matrix.png)
+![Correlation Matrix](../assets/eda/correlation_matrix.png)
 
 ### The Challenge: Data Overlap
 Look at the graph below. The "Safe" (Blue) and "Default" (Red) customers are almost completely on top of each other. This is why standard models fail—the "line" between them is very blurry.
 
-![Overlap Analysis](assets/eda/overlap_analysis.png)
+![Overlap Analysis](../assets/eda/overlap_analysis.png)
 
 ---
 
@@ -49,17 +49,16 @@ Every model we built went through a **4-Stage Evolution**. Understanding this jo
 ### 1. Logistic Regression (The Balanced Hero)
 *   **SMOTE Version**: Showed a strong base signal (~54% Recall).
 *   **v2 (Threshold 0.40)**: The ultimate winner. By being simple, it didn't get "fooled" by the noise in our overlap plot.
-*   **Confusion Matrix**: ![Logistic Regression v2 Matrix](assets/eval/Logistic_Regression_v2_cm_0.4.png)
+*   **Confusion Matrix**: ![Logistic Regression v2 Matrix](../assets/eval/Logistic_Regression_v2_cm_0.4.png)
 
 ### 2. Random Forest (The Overthinker)
 *   **Baseline**: Perfect accuracy, but missed every default.
 *   **Optimized v2**: Improved slightly, but because it is an "ensemble" of many trees, it struggled to draw a clean line through the messy overlap we saw in Module 1.
-*   **Confusion Matrix**: ![Random Forest v2 CM](assets/eval/Optimized_Random_Forest_v2_cm_0.4.png)
+*   **Confusion Matrix**: ![Random Forest v2 CM](../assets/eval/Optimized_Random_Forest_v2_cm_0.4.png)
 
 ### 3. XGBoost (The Industry Giant)
-*   **Baseline**: Completely ignored defaults to maximize its "LogLoss" score.
-*   **Optimized v2**: Even with tuning and a lower 0.40 threshold, XGBoost was still too conservative.
-*   **Confusion Matrix**: ![XGBoost v2 CM](assets/eval/XGBoost_v2_cm_0.4.png)
+![XGBoost CM (v1)](../assets/eval/XGBoost_cm.png)
+![XGBoost CM (v2 Optimized 0.40)](../assets/eval/XGBoost_v2_cm_0.4.png)
 *   **Why it was Rejected**: In scientific terms, XGBoost is "High-Variance." On this specific noisy dataset, it was trying to build a complex skyscraper on a foundation of sand. It simply couldn't find the Signal as well as Logistic Regression.
 
 ---
