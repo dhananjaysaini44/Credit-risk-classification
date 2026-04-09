@@ -49,19 +49,22 @@ Every model we built went through a **4-Stage Evolution**. Understanding this jo
 ### 1. Logistic Regression (The Balanced Hero)
 *   **SMOTE Version**: Showed a strong base signal (~54% Recall).
 *   **v2 (Threshold 0.40)**: The ultimate winner. By being simple, it didn't get "fooled" by the noise in our overlap plot.
-*   **Confusion Matrix**: 
+*   **Confusion Matrix**:
+
   ![Logistic Regression v1 (Baseline)](../assets/eval/Logistic_Regression_cm.png)
   ![Logistic Regression v2 Matrix](../assets/eval/Logistic_Regression_v2_cm_0.4.png)
 
 ### 2. Random Forest (The Overthinker)
 *   **Baseline**: Perfect accuracy, but missed every default.
 *   **Optimized v2**: Improved slightly, but because it is an "ensemble" of many trees, it struggled to draw a clean line through the messy overlap we saw in Module 1.
-*   **Confusion Matrix**: 
+*   **Confusion Matrix**:
+
   ![Random Forest v1 (Baseline)](../assets/eval/Random_Forest_cm.png)
   ![Random Forest v2 CM](../assets/eval/Optimized_Random_Forest_v2_cm_0.4.png)
 
 ### 3. XGBoost (The Industry Giant)
-*   **Confusion Matrix**: 
+*   **Confusion Matrix**:
+
 ![XGBoost CM (v1)](../assets/eval/XGBoost_cm.png)
 ![XGBoost CM (v2 Optimized 0.40)](../assets/eval/XGBoost_v2_cm_0.4.png)
 
