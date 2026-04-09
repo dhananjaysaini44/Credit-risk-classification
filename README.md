@@ -1,45 +1,71 @@
 # Credit Risk Classification
 
-![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?logo=scikit-learn&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-20BEFF?logo=xgboost&logoColor=white)
 
 ## Overview
-This project builds a predictive machine learning pipeline to classify if a loan applicant is likely to default on their credit.
+This project builds a predictive machine learning pipeline to classify if a loan applicant is likely to default on their credit. It utilizes advanced techniques such as SMOTE, interaction engineering, and gradient boosting to handle imbalanced and noisy financial data.
 
 ## Project Structure
 ```text
 CRC Project/
 ├── assets/
-│   ├── eda/              # Visualizations and text summaries from Exploratory Data Analysis
-│   ├── eval/             # Confusion Matrices and evaluation plots for the trained models
-│   └── models/           # Exported trained models (.pkl files)
-├── data/                 # Raw and processed datasets (X_train.csv, y_test.csv, etc.)
-├── docs/                 # Workflow documentation and planning files
+│   ├── eda/              # Exploratory Analysis (Correlation, Overlap)
+│   ├── eval/             # Model Performance (Confusion Matrices, Threshold Tuning)
+│   └── models/           # Saved Model Pipelines (.pkl)
+├── data/                 # Raw/Processed Data (.csv)
+├── docs/                 # Workflow documentation and planning
 ├── notebooks/
-│   ├── eda.py            # Script executing statistical breakdown of raw data
-│   ├── preprocessing.py  # Script handling imputation, encodings, and feature engineering
-│   └── train_model.py    # Script training ML classification models
-└── README.md             # This document
+│   ├── Project.ipynb     # Jupyter Notebook for experimental development
+│   ├── preprocessing.py  # Data cleaning and feature engineering
+│   ├── balancing.py      # SMOTE class balancing
+│   ├── eda.py            # Statistical analysis of raw data
+│   ├── eda_resampled.py  # Analysis of balanced data
+│   ├── train_model.py    # XGBoost and Baseline training
+│   ├── threshold_tuning.py # Probability cutoff analysis
+│   └── visualize_signal.py # Signal diagnostic visualizations
+├── requirements.txt      # Project dependencies (XGBoost, etc.)
+└── README.md             # Project documentation
 ```
 
-## Methodology & Machine Learning Workflow
+## Methodology and Machine Learning Workflow
 
-### 1. Data Processing Strategy (`preprocessing.py`)
-To ensure our model learns real-world patterns reliably without "Data Leakage", we enforce strict data hygiene:
-- **Train-Test Split First:** The raw data is strictly split 80/20 before any statistics are calculated.
-- **Scikit-Learn Pipelines:**
-  - `SimpleImputer(strategy='mean')`: Used exclusively to handle missing `Income` values based *only* on the training data mean.
-  - `StandardScaler`: Applied to all numeric features (`Age`, `Income`, `Loan_Amount`, `Credit_Score`, `Employment_Years`) so that large-magnitude values (like $50k loans) don't computationally overwhelm smaller scales (like 5 years employment) for distance-based ML algorithms.
-  - `OrdinalEncoder`: Explicitly orders `Education_Level` (High School -> PhD).
-  - `OneHotEncoder`: Converts `Housing_Status` into mathematically readable binary points.
+### Phase 1: Data Processing Strategy
+To ensure our model learns real-world patterns reliably without data leakage, we enforce strict data hygiene:
+- **Train-Test Split First**: The raw data is strictly split 80/20 before any statistics are calculated.
+- **Scikit-Learn Pipelines**:
+  - **SimpleImputer**: Used exclusively to handle missing values based only on the training data mean.
+  - **StandardScaler**: Applied to all numeric features so that large-magnitude values do not computationally overwhelm smaller scales.
+  - **OrdinalEncoder**: Explicitly orders Education_Level (High School -> PhD).
+  - **OneHotEncoder**: Converts categorical variables into binary points.
 
-### 2. Feature Engineering
-- **`Loan_to_Income_Ratio`**: Instead of having the algorithm guess the burden of a loan, we explicitly calculate the exact ratio of the requested `Loan_Amount` against their `Income`. A high ratio is functionally one of the most powerful predictors of default risk.
-  - *Real-Life Example:* Imagine an applicant asking for a **$50,000 loan**. If the ML model only looks at the loan size in isolation, it struggles to gauge true risk. But if Applicant A has an income of **$500,000/year** (Ratio: 0.10 or 10%) and Applicant B has an income of **$25,000/year** (Ratio: 2.0 or 200%), the ratio instantly tells the algorithm exactly who is financially overburdened and highly likely to default.
+### Phase 2: Feature Engineering
+#### Loan to Income Ratio
+Instead of having the algorithm guess the burden of a loan, we explicitly calculate the exact ratio of the requested Loan_Amount against income. A high ratio is functionally one of the most powerful predictors of default risk.
 
-### 3. Model Training (`train_model.py`)
-Because our dataset is heavily imbalanced (~86% No Default / ~14% Default), basic accuracy is a highly misleading metric. 
-- **Algorithms Used:**
-  - **Logistic Regression (Baseline):** Interpretable and fast.
-  - **Random Forest:** Capable of learning non-linear structures.
-- **Handling Imbalance:** We pass `class_weight='balanced'` into our estimators. This mathematically forces the algorithm to heavily penalize mistakes made on the minority class ("Defaults") so it doesn't ignore them.
-- **Evaluation:** Instead of accuracy, models are evaluated heavily on **Recall** (Ability to catch true defaults) and **Precision** (Limiting false alarms) combined using the **F1-Score**. Visual progress is tracked via Confusion Matrices.
+#### Advanced Interaction Engineering
+We introduced synthetic interaction terms to create a stronger mathematical separation between classes:
+- **Risk Index**: (Loan_Amount / Income) / Credit_Score. This captures the magnitude of risk by weighting the burden of debt against the applicant's reputation.
+- **Stability Index**: Credit_Score * Employment_Years. This rewards long-term employment stability combined with high credit honor.
+
+### Phase 3: Model Training and Optimization
+
+#### Addressing Class Imbalance with SMOTE
+In our initial analysis, we found a severe class imbalance. This caused baseline models to become biased towards the majority class. We utilized Synthetic Minority Over-sampling Technique (SMOTE) to synthesize new, mathematically plausible minority examples using a K-Nearest Neighbors approach.
+
+#### Gradient Boosting and Hyperparameter Tuning
+We deployed XGBoost (eXtreme Gradient Boosting) to handle high variance. We utilized RandomizedSearchCV targeting Recall specifically, as missing a default is significantly more expensive than accidentally rejecting a safe customer.
+
+#### Probability Threshold Tuning
+Standard models use a generic 0.50 probability cutoff. However, credit risk is an asymmetric problem. We implement a strategy to lower the threshold (e.g., to 0.30) to catch nearly 100% of defaults, allowing the business to calibrate its specific risk appetite.
+
+## Performance Diagnosis and Results
+
+### The Signal to Noise Barrier
+Our signal diagnostic analysis revealed that for this specific dataset, standard features overlap heavily between safe and defaulting customers. This high class overlap (often > 90%) makes it difficult for standard models to find a clear decision boundary without threshold tuning.
+
+### Final Summary of Model Performance
+| Strategy | Best Metric | Significance |
+| :--- | :--- | :--- |
+| **Baseline** | Accuracy (86%) | Misleading due to imbalance; missed most defaults. |
+| **SMOTE** | F1-Score (Improved) | Balanced the classes, forcing the model to acknowledge defaults. |
+| **Threshold Tuning** | **Recall (Up to 100%)** | Provides a full-risk alert setting for the business. |

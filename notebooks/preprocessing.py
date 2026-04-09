@@ -28,11 +28,11 @@ def main():
     y = df['Default']
     
     # --- FEATURE ENGINEERING ---
-    # We produce Loan_to_Income_Ratio prior to splitting so it naturally flows into the handling pipelines.
-    # Any rows with missing Income will generate a missing Ratio, which the imputer securely solves next.
     X['Loan_to_Income_Ratio'] = X['Loan_Amount'] / X['Income']
+    X['Stability_Index'] = X['Credit_Score'] * X['Employment_Years']
+    X['Risk_Index'] = (X['Loan_Amount'] / (X['Income'] + 1)) / (X['Credit_Score'] + 1)
     
-    # 80% train, 20% test split. Random state for reproducibility.
+    # 80% train, 20% test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     print(f"Data successfully split -> Train: {X_train.shape[0]} rows, Test: {X_test.shape[0]} rows")
 
@@ -44,9 +44,11 @@ def main():
     
     # 2. DEFINING THE PIPELINES
     
-    # Numeric features: Ensure full coverage and scaling.
-    # SimpleImputer guarantees safety against future nulls, StandardScaler scales them to 0 mean and 1 variance.
-    numeric_features = ['Age', 'Income', 'Loan_Amount', 'Credit_Score', 'Employment_Years', 'Loan_to_Income_Ratio']
+    # Numeric features: Updated to include new interaction terms
+    numeric_features = [
+        'Age', 'Income', 'Loan_Amount', 'Credit_Score', 'Employment_Years', 
+        'Loan_to_Income_Ratio', 'Stability_Index', 'Risk_Index'
+    ]
     numeric_transformer = Pipeline(steps=[
         ('imputer', SimpleImputer(strategy='mean')),
         ('scaler', StandardScaler())
