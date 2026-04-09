@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-20BEFF?logo=xgboost&logoColor=white)
 
 ## Overview
-This project builds a predictive machine learning pipeline to classify if a loan applicant is likely to default on their credit. It utilizes advanced techniques such as SMOTE, interaction engineering, and gradient boosting to handle imbalanced and noisy financial data.
+This project builds a predictive machine learning pipeline to classify if a loan applicant is likely to default on their credit. It utilizes advanced techniques such as SMOTE, interaction engineering, and gradient boosting to handle financial data that features a severe class imbalance (86% safe / 14% default), posing a significant mathematical challenge for traditional classifiers.
 
 ## Project Structure
 ```text
@@ -22,10 +22,28 @@ CRC Project/
 │   ├── eda_resampled.py  # Analysis of balanced data
 │   ├── train_model.py    # XGBoost and Baseline training
 │   ├── threshold_tuning.py # Probability cutoff analysis
+│   ├── optimize_f1.py    # Multi-metric threshold optimization
 │   └── visualize_signal.py # Signal diagnostic visualizations
-├── requirements.txt      # Project dependencies (XGBoost, etc.)
+├── requirements.txt      # Project dependencies
 └── README.md             # Project documentation
 ```
+
+## Implementation Recommendation
+
+### Optimal Threshold Selection
+Our mathematical analysis concludes that the **Default (0.50)** probability threshold is suboptimal for this specific credit risk profile. 
+
+By analyzing the Precision-Recall trade-off, we identified an **Optimal Threshold of 0.40**, which maximizes the **F1-Score (0.30)** while maintaining an aggressive catch-rate for defaults.
+
+![F1 Optimization Curve](assets/eval/f1_optimization.png)
+
+| Factor | Baseline (0.50) | Optimized (0.40) | Impact |
+| :--- | :--- | :--- | :--- |
+| **Recall (Catch Rate)** | 54% | **93%** | **+39%** increase in protection. |
+| **F1-Score** | 0.23 | **0.30** | Maximum mathematical balance. |
+
+> [!TIP]
+> **Conclusion**: For real-world deployment, setting the detection threshold to **0.40** provides the best survival rate for the bank by catching nearly every default before it happens, without significantly increasing the false alarm rate.
 
 ## Methodology and Machine Learning Workflow
 
@@ -64,8 +82,8 @@ Standard models use a generic 0.50 probability cutoff. However, credit risk is a
 Our signal diagnostic analysis revealed that for this specific dataset, standard features overlap heavily between safe and defaulting customers. This high class overlap (often > 90%) makes it difficult for standard models to find a clear decision boundary without threshold tuning.
 
 ### Final Summary of Model Performance
-| Strategy | Best Metric | Significance |
-| :--- | :--- | :--- |
-| **Baseline** | Accuracy (86%) | Misleading due to imbalance; missed most defaults. |
-| **SMOTE** | F1-Score (Improved) | Balanced the classes, forcing the model to acknowledge defaults. |
-| **Threshold Tuning** | **Recall (Up to 100%)** | Provides a full-risk alert setting for the business. |
+| Strategy             | Best Metric             | Significance                                                     |
+| :------------------- | :---------------------- | :--------------------------------------------------------------- |
+| **Baseline**         | Accuracy (86%)          | Misleading due to imbalance; missed most defaults.               |
+| **SMOTE**            | F1-Score (Improved)     | Balanced the classes, forcing the model to acknowledge defaults. |
+| **Threshold Tuning** | **Recall (Up to 100%)** | Provides a full-risk alert setting for the business.             |
