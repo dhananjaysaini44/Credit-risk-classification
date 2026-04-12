@@ -29,7 +29,7 @@ const STEPS = [
 
 export default function RiskForm() {
   const [currentStep, setCurrentStep] = useState(0);
-  const { data, updateData, isLoading, setPrediction, setLoading, setError } = useRiskStore();
+  const { data, updateData, isLoading, error, setPrediction, setLoading, setError } = useRiskStore();
 
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
@@ -136,6 +136,27 @@ export default function RiskForm() {
                 ))}
               </div>
             )}
+
+          {/* Dynamic Error Feedback */}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mt-4 flex items-start space-x-3 p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl overflow-hidden"
+              >
+                <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                <div className="space-y-0.5 text-left">
+                  <p className="text-[10px] font-bold text-red-500 uppercase tracking-wider">Analysis Blown</p>
+                  <p className="text-[10px] text-red-500/80 leading-relaxed font-sans">
+                    {error}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <button
             onClick={handleNext}
             disabled={isLoading}

@@ -8,7 +8,8 @@ import os
 app = FastAPI(title="Credit Risk API v2.1")
 
 # Configure CORS using environment variables for production
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+raw_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+allowed_origins = [origin.strip().rstrip("/") for origin in raw_origins]
 
 app.add_middleware(
     CORSMiddleware,
