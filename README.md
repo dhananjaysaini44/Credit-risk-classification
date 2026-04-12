@@ -34,14 +34,17 @@ CRC Project/
 │   └── utils.py          # Real-time risk scoring logic
 ├── data/                 # Raw/Processed financial datasets
 ├── docs/                 # Workflow documentation and planning
+├── notebooks/            # ML Development & Research (Advanced Analysis)
+├── public/               # Static Assets (Cinematic Frames & Media)
 ├── src/                  # Next.js 15+ Cinematic Frontend
-│   ├── app/              # App Router and Main Entry Point
-│   ├── components/       # Cinematic & Interactive UI Components
-│   ├── store/            # Zustand State Management
-│   └── styles/           # Global CSS and Tailwind Directives
+│   ├── app/              # App Router (Layouts & Navigation)
+│   ├── components/       # UI Library
+│   │   ├── cinematic/    # Scroll-based Visual Storytelling
+│   │   └── interactive/  # Functional Forms & Risk Analytics
+│   └── store/            # Zustand Centralized State
 ├── requirements.txt      # Python backend dependencies
 ├── package.json          # Frontend dependencies & unified scripts
-└── .env.example          # Environment configuration template
+└── start.ps1             # Windows startup script
 ```
 
 ## Implementation Research & ML Methodology
