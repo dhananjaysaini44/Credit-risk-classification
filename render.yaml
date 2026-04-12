@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: crc-backend
+    runtime: python
+    plan: free # Change to 'starter' or higher for production use
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ALLOWED_ORIGINS
+        sync: false
+        placeholder: "https://your-vercel-domain.vercel.app,http://localhost:3000"
+      - key: PORT
+        value: "10000"
