@@ -29,7 +29,7 @@ export default function Preloader() {
               className="mb-8 flex flex-col items-center space-y-2"
             >
               <h2 className="text-xl font-light tracking-[0.2em] text-foreground uppercase">
-                Antigravity
+                Credit-Risk Classification
               </h2>
               <div className="h-[1px] w-12 bg-primary/40" />
             </motion.div>

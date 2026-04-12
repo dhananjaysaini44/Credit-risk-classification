@@ -35,21 +35,24 @@ export default function Home() {
           <Hero />
 
           <StorySection 
-            title="Beyond Traditional Scoring" 
-            text="Traditional scoring methods often miss the behavioral nuances of modern borrowers. Our AI-driven model leverages deep financial patterns to uncover true risk variables."
+            title="About the Data" 
+            text="The underlying dataset consists of a comprehensive sample of loan applicants, capturing core behavioral and financial signals. By analyzing the interplay between income levels, credit scores, and stability indices, our model uncovers hidden correlations that drive real-world default risk."
             side="left"
+            imageUrl="/dataset_dashboard.png"
           />
 
           <StorySection 
-            title="The Logistic Calibration" 
-            text="Using a state-of-the-art Logistic Regression model with Robust Scaling, we achieve unmatched stability across diverse demographic data."
+            title="Data Processing" 
+            text="To handle the inherent class imbalance, we implement SMOTE (Synthetic Minority Over-sampling Technique) to generate mathematically plausible default instances. This is followed by Robust Scaling to mitigate outlier influence and comprehensive encoding of categorical stability indices. These steps ensure the model learns from a perfectly balanced and normalized feature space, maximizing predictive reliability across all segments."
             side="right"
+            imageUrl="/smote_theme.png"
           />
 
           <StorySection 
-            title="Financial Transparency" 
-            text="We believe in open banking data and clear decision paths. Every prediction is backed by detailed probability analysis and confidence scoring."
+            title="Model Training" 
+            text="The Model Training leverages Logistic Regression, specifically calibrated with a 0.4 threshold to achieve the highest possible recall of 93% for default identification. While this peak performance on the dataset results in a precision of 18% and an F1-score of 30%, it ensures maximum safety by catching nearly every high-risk applicant. This model represents the optimal balance for defensive credit strategy."
             side="left"
+            imageUrl="/confusion_matrix_v3.png"
           />
 
           {/* Core Interactive Section */}
@@ -57,7 +60,7 @@ export default function Home() {
             <div className="max-w-4xl w-full flex flex-col items-center text-center space-y-12">
               <div className="space-y-4">
                 <h2 className="text-5xl font-light tracking-tightest">
-                  {prediction !== null ? 'Your Risk Analysis' : 'Analyze Your Position'}
+                  {prediction !== null ? 'Your Risk Analysis' : 'Try it Yourself'}
                 </h2>
               </div>
 
