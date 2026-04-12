@@ -11,3 +11,5 @@ services:
         placeholder: "https://your-vercel-domain.vercel.app,http://localhost:3000"
       - key: PORT
         value: "10000"
+      - key: PYTHON_VERSION
+        value: "3.11.1"
