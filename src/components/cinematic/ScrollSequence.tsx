@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useRiskStore } from '@/store/useRiskStore';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,76 +13,87 @@ interface ScrollSequenceProps {
 
 export default function ScrollSequence({ frameCount }: ScrollSequenceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const sequence = useRef({ frame: 0 }).current;
+  const { setLoadProgress } = useRiskStore();
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
+  // 1. Initial Image Preloading
   useEffect(() => {
+    const loadedImages: HTMLImageElement[] = [];
     let loadedCount = 0;
 
     for (let i = 1; i <= frameCount; i++) {
-      const img = new Image();
-      img.src = `/frames/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount >= 30) setIsLoaded(true);
-      };
-      imagesRef.current[i - 1] = img;
+        const img = new Image();
+        // Frame naming: ezgif-frame-001.jpg, ezgif-frame-002.jpg...
+        const frameIndex = i.toString().padStart(3, '0');
+        img.src = `/frames/ezgif-frame-${frameIndex}.jpg`;
+        
+        img.onload = () => {
+          loadedCount++;
+          setLoadProgress((loadedCount / frameCount) * 100);
+          
+          if (loadedCount === frameCount) {
+             setImages(loadedImages);
+             setIsReady(true);
+          }
+        };
+        loadedImages.push(img);
     }
-  }, [frameCount]);
+  }, [frameCount, setLoadProgress]);
 
+  // 2. Interaction & Rendering logic
   useEffect(() => {
-    if (!isLoaded || !canvasRef.current || !containerRef.current) return;
+    if (!isReady || images.length === 0 || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const context = canvas.getContext('2d');
+    if (!context) return;
 
-    // Fixed dimensions - simplest approach
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Set internal canvas resolution
+    canvas.width = 1920;
+    canvas.height = 1080;
 
-    const render = () => {
-      const img = imagesRef.current[Math.floor(sequence.frame)];
-      if (img && ctx) {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const renderFrame = (index: number) => {
+      const img = images[Math.floor(index)];
+      if (img && context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
       }
     };
 
-    gsap.to(sequence, {
+    // Initial render
+    renderFrame(0);
+
+    // Create a proxy object for GSAP to animate
+    const sequence = { frame: 0 };
+
+    const anim = gsap.to(sequence, {
       frame: frameCount - 1,
+      snap: 'frame',
       ease: 'none',
       scrollTrigger: {
-        trigger: containerRef.current,
+        trigger: 'body',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1,
-        onUpdate: render,
+        scrub: 0.5, // Subtle Smoothing
       },
+      onUpdate: () => renderFrame(sequence.frame),
     });
 
-    render();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      render();
+    return () => {
+      anim.kill();
+      ScrollTrigger.getAll().forEach(t => t.kill());
     };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isLoaded, frameCount]);
+  }, [isReady, images, frameCount]);
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ height: '400vh' }}>
-      <div className="sticky top-0 w-full h-screen overflow-hidden pointer-events-none">
-        <canvas
-          ref={canvasRef}
-          className="w-full h-full object-cover opacity-60 contrast-150 saturate-[0.8]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/10 to-background" />
-      </div>
+    <div className="w-full h-full relative overflow-hidden bg-black">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full object-cover opacity-60 pointer-events-none"
+      />
+      {/* Background Vignette */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none opacity-40" />
     </div>
   );
 }

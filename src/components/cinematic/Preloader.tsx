@@ -2,25 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRiskStore } from '@/store/useRiskStore';
 
 export default function Preloader() {
-  const [progress, setProgress] = useState(0);
+  const { loadProgress } = useRiskStore();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    let current = 0;
-    const interval = setInterval(() => {
-      current += Math.random() * 5;
-      if (current >= 100) {
-        current = 100;
-        setIsLoaded(true);
-        clearInterval(interval);
-      }
-      setProgress(current);
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, []);
+    if (loadProgress >= 100) {
+      const timeout = setTimeout(() => setIsLoaded(true), 800);
+      return () => clearTimeout(timeout);
+    }
+  }, [loadProgress]);
 
   return (
     <AnimatePresence>
@@ -44,7 +37,7 @@ export default function Preloader() {
             <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
+                animate={{ width: `${loadProgress}%` }}
                 className="absolute top-0 left-0 h-full bg-primary shadow-[0_0_15px_rgba(124,58,237,0.5)]"
               />
             </div>
@@ -54,7 +47,7 @@ export default function Preloader() {
               animate={{ opacity: [0.3, 1, 0.3] }}
               transition={{ repeat: Infinity, duration: 2 }}
             >
-              {Math.floor(progress)}%
+              {Math.floor(loadProgress)}%
             </motion.span>
           </div>
           

@@ -28,8 +28,6 @@ export const useRiskStore = create<RiskState>((set) => ({
   probability: null,
   isLoading: false,
   error: null,
-  // ... rest of state
-  setLoadProgress: (progress) => set({ loadProgress: progress }),
   data: {
     age: 30,
     income: 50000,
@@ -39,6 +37,7 @@ export const useRiskStore = create<RiskState>((set) => ({
     educationLevel: 'Bachelors',
     housingStatus: 'Rent',
   },
+  setLoadProgress: (progress) => set({ loadProgress: progress }),
   setPrediction: (prediction, probability) => set({ prediction, probability, isLoading: false }),
   setLoading: (loading) => set({ isLoading: loading }),
   setError: (error) => set({ error: error, isLoading: false }),
