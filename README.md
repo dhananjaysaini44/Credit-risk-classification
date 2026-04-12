@@ -18,8 +18,8 @@ The platform is fully deployed and accessible in the cloud.
 > **Wake Up the Engine**: The backend is hosted on Render's free tier and may "sleep" after inactivity. Please click the **[Backend Health Check](https://credit-risk-classification-fg0q.onrender.com/)** first to wake up the service (may take 30-60s).
 
 ### Cloud URLs
-- **Backend API**: `https://credit-risk-classification-fg0q.onrender.com`
-- **Frontend Dashboard**: [Deploying to Vercel...] *(Update with your Vercel URL)*
+- **Backend API**: https://credit-risk-classification-fg0q.onrender.com
+- **Frontend Dashboard**: https://credit-risk-classification-q1ny-o109zgdgr.vercel.app/
 
 ### How to use the Live Platform
 1.  **Initiate Connection**: Click the Health Check link above.
