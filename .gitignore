@@ -6,8 +6,10 @@ __pycache__/
 # Data (Never commit large raw data or sensitive user data to GitHub)
 data/
 
-# Model Weights (These are large binaries, generate them locally)
+# Model Weights (Allow ONLY production models to be committed)
 assets/models/*.pkl
+!assets/models/Logistic_Regression_v2.pkl
+!assets/models/preprocessor.pkl
 
 # Visualizations (Optional to ignore if you want to show them off, but we will keep them tracked for the README)
 # assets/eval/*.png 
