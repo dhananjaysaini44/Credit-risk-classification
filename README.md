@@ -11,6 +11,21 @@ This project is a high-fidelity, full-stack Credit Risk Classification platform.
 - **Advanced ML Pipeline**: Implementation of SMOTE balancing, Robust Scaling, and Optimized XGBoost ensembles.
 - **Unified Development**: Single-command startup for both frontend and backend environments.
 
+## Live Deployment
+The platform is fully deployed and accessible in the cloud. 
+
+> [!IMPORTANT]
+> **Wake Up the Engine**: The backend is hosted on Render's free tier and may "sleep" after inactivity. Please click the **[Backend Health Check](https://credit-risk-classification-fg0q.onrender.com/)** first to wake up the service (may take 30-60s).
+
+### Cloud URLs
+- **Backend API**: `https://credit-risk-classification-fg0q.onrender.com`
+- **Frontend Dashboard**: [Deploying to Vercel...] *(Update with your Vercel URL)*
+
+### How to use the Live Platform
+1.  **Initiate Connection**: Click the Health Check link above.
+2.  **Access UI**: Open the Frontend Dashboard link.
+3.  **Run Inference**: Scroll down to the "Try it Yourself" section, enter loan details, and click **Calculate Risk** to see the ML model's prediction in real-time.
+
 ## Quick Start
 You can start both the Next.js frontend and FastAPI backend with a single command:
 ```bash
