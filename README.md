@@ -62,7 +62,7 @@ By analyzing the Precision-Recall trade-off, we identified an **Optimal Threshol
 > [!TIP]
 > **Conclusion**: For real-world deployment, setting the detection threshold to **0.40** provides the best survival rate for the bank by catching nearly every default before it happens, without significantly increasing the false alarm rate.
 
-### Phase 1: Data Processing Strategy
+### Data Processing Strategy
 To ensure our model learns real-world patterns reliably without data leakage, we enforce strict data hygiene:
 - **Train-Test Split First**: The raw data is strictly split 80/20 before any statistics are calculated.
 - **Scikit-Learn Pipelines**:
@@ -71,7 +71,7 @@ To ensure our model learns real-world patterns reliably without data leakage, we
   - **OrdinalEncoder**: Explicitly orders Education_Level stability.
   - **OneHotEncoder**: Converts categorical variables into binary features.
 
-### Phase 2: Feature Engineering
+### Feature Engineering
 #### Loan to Income Ratio
 Instead of having the algorithm guess the burden of a loan, we explicitly calculate the exact ratio of the requested Loan_Amount against income. This is functionally one of the most powerful predictors of default risk.
 
@@ -80,7 +80,7 @@ We introduced synthetic interaction terms to create a stronger mathematical sepa
 - **Risk Index**: (Loan_Amount / Income) / Credit_Score.
 - **Stability Index**: Credit_Score * Employment_Years.
 
-### Phase 3: Model Training and Optimization
+### Model Training and Optimization
 #### Addressing Class Imbalance with SMOTE
 We utilized Synthetic Minority Over-sampling Technique (SMOTE) to synthesize new, mathematically plausible minority examples using a K-Nearest Neighbors approach.
 
