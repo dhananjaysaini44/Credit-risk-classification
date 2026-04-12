@@ -8,20 +8,15 @@ export default function Preloader() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const frameCount = 240;
-    let loadedCount = 0;
-
+    let current = 0;
     const interval = setInterval(() => {
-      if (loadedCount < frameCount) {
-        loadedCount += Math.floor(Math.random() * 5) + 1;
-        const currentProgress = Math.min((loadedCount / frameCount) * 100, 100);
-        setProgress(currentProgress);
-        
-        if (currentProgress >= 100) {
-          setIsLoaded(true);
-          clearInterval(interval);
-        }
+      current += Math.random() * 5;
+      if (current >= 100) {
+        current = 100;
+        setIsLoaded(true);
+        clearInterval(interval);
       }
+      setProgress(current);
     }, 50);
 
     return () => clearInterval(interval);
@@ -31,21 +26,21 @@ export default function Preloader() {
     <AnimatePresence>
       {!isLoaded && (
         <motion.div
-          key="preloader"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[999] bg-background flex flex-col items-center justify-center p-8"
+           exit={{ opacity: 0 }}
+           className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-6"
         >
-          <div className="max-w-md w-full flex flex-col items-center">
-            <motion.h2 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="text-2xl font-light tracking-[0.2em] mb-8 text-foreground/80"
+          <div className="w-full max-w-xs flex flex-col items-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 flex flex-col items-center space-y-2"
             >
-              PREPARING EXPERIENCE
-            </motion.h2>
-            
+              <h2 className="text-xl font-light tracking-[0.2em] text-foreground uppercase">
+                Antigravity
+              </h2>
+              <div className="h-[1px] w-12 bg-primary/40" />
+            </motion.div>
+
             <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
@@ -63,10 +58,14 @@ export default function Preloader() {
             </motion.span>
           </div>
           
-          <div className="absolute bottom-12 left-12 flex flex-col space-y-2 opacity-30 text-[10px] font-mono tracking-widest uppercase">
-            <span>Antigravity Render Engine</span>
-            <span>Credit Risk v2.1.0</span>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="absolute bottom-12 text-[10px] font-mono tracking-[0.3em] text-muted-foreground/40 uppercase"
+          >
+            Preparing Experience
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

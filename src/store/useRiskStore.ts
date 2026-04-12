@@ -14,6 +14,8 @@ interface RiskState {
     educationLevel: string;
     housingStatus: string;
   };
+  loadProgress: number;
+  setLoadProgress: (progress: number) => void;
   setPrediction: (prediction: number, probability: number) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -21,10 +23,13 @@ interface RiskState {
 }
 
 export const useRiskStore = create<RiskState>((set) => ({
+  loadProgress: 0,
   prediction: null,
   probability: null,
   isLoading: false,
   error: null,
+  // ... rest of state
+  setLoadProgress: (progress) => set({ loadProgress: progress }),
   data: {
     age: 30,
     income: 50000,

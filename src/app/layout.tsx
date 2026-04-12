@@ -13,7 +13,7 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Antigravity | Cinematic Credit Risk Prediction",
+  title: "Credit Risk Analysis | Cinematic Platform",
   description: "Advanced financial stability analysis using state-of-the-art machine learning.",
 };
 

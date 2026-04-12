@@ -32,6 +32,9 @@ export default function ResultsDisplay() {
         >
           {label}
         </h3>
+        <p className="text-[10px] font-mono tracking-widest opacity-50 uppercase mt-1">
+          {isHighRisk ? 'Risky - Loan might get Disapproved' : 'Safe - You are in the Clear'}
+        </p>
       </div>
 
       <div className="relative h-4 w-full bg-white/5 rounded-full overflow-hidden">

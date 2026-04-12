@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useRiskStore } from '@/store/useRiskStore';
 import Hero from '@/components/cinematic/Hero';
 import ScrollSequence from '@/components/cinematic/ScrollSequence';
@@ -12,6 +13,11 @@ import SmoothScroll from '@/components/cinematic/SmoothScroll';
 
 export default function Home() {
   const { prediction } = useRiskStore();
+
+  useEffect(() => {
+    // Force scroll to top on every fresh mount to prevent session-jump
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <SmoothScroll>
@@ -50,9 +56,6 @@ export default function Home() {
           <section className="relative min-h-screen flex flex-col items-center justify-center py-24 px-8">
             <div className="max-w-4xl w-full flex flex-col items-center text-center space-y-12">
               <div className="space-y-4">
-                <span className="text-[10px] font-mono tracking-ultimate text-primary uppercase">
-                  EXPERIENCE THE ALGORITHM
-                </span>
                 <h2 className="text-5xl font-light tracking-tightest">
                   {prediction !== null ? 'Your Risk Analysis' : 'Analyze Your Position'}
                 </h2>
@@ -62,20 +65,6 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Premium Footer */}
-          <footer className="relative h-[40vh] border-t border-white/5 flex flex-col items-center justify-center text-center px-8">
-            <div className="space-y-4 opacity-50">
-              <span className="text-[10px] font-mono tracking-ultimate uppercase">Antigravity Financial Technologies</span>
-              <p className="max-w-xs text-[10px] font-sans tracking-wide leading-relaxed font-light">
-                This tool is for educational purposes. Always consult a certified financial advisor for formal credit analysis.
-              </p>
-            </div>
-            <div className="mt-8 flex space-x-8 text-[10px] font-mono tracking-widest text-muted-foreground uppercase uppercase">
-              <a href="#" className="hover:text-primary transition-colors">Privacy</a>
-              <a href="#" className="hover:text-primary transition-colors">Security</a>
-              <a href="#" className="hover:text-primary transition-colors">V2.1.0</a>
-            </div>
-          </footer>
         </div>
       </main>
     </SmoothScroll>

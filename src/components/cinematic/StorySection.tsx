@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -16,12 +16,6 @@ interface StorySectionProps {
 export default function StorySection({ title, text, side }: StorySectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
-
-  const [storyId, setStoryId] = useState<number | null>(null);
-
-  useEffect(() => {
-    setStoryId(Math.floor(Math.random() * 90) + 10);
-  }, []);
 
   useGSAP(() => {
     if (!sectionRef.current) return;
@@ -57,9 +51,6 @@ export default function StorySection({ title, text, side }: StorySectionProps) {
           side === 'right' ? 'text-right items-end' : 'text-left items-start'
         }`}
       >
-        <span className="text-[10px] font-mono tracking-ultimate uppercase text-primary/60">
-          STORYLINE #{storyId || '...'}
-        </span>
         <h2 className="text-4xl md:text-5xl font-light tracking-tight leading-none text-foreground">
           {title}
         </h2>

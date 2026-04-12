@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-
 export default function Hero() {
   return (
     <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden z-10 px-4">
@@ -11,18 +10,6 @@ export default function Hero() {
       </div>
 
       <div className="flex flex-col items-center text-center space-y-6 max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="flex items-center space-x-3 mb-4"
-        >
-          <div className="h-[1px] w-8 bg-primary shadow-[0_0_8px_rgba(124,58,237,0.5)]" />
-          <span className="text-[10px] font-mono tracking-ultimate uppercase text-primary">
-            AI-POWERED FINANCIAL CO-PILOT
-          </span>
-          <div className="h-[1px] w-8 bg-primary shadow-[0_0_8px_rgba(124,58,237,0.5)]" />
-        </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
