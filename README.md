@@ -1,34 +1,50 @@
 # Credit Risk Classification
 
-![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?logo=pandas&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-20BEFF?logo=xgboost&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat&logo=python&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-15+-000000?style=flat&logo=nextdotjs&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white) ![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwindcss&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white) ![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=flat&logo=greensock&logoColor=white) ![Three.js](https://img.shields.io/badge/Three.js-r171-000000?style=flat&logo=threedotjs&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.3+-F7931E?style=flat&logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.0+-20BEFF?style=flat&logo=xgboost&logoColor=white)
 
 ## Overview
-This project builds a predictive machine learning pipeline to classify if a loan applicant is likely to default on their credit. It utilizes advanced techniques such as SMOTE, interaction engineering, and gradient boosting to handle financial data that features a severe class imbalance (86% safe / 14% default), posing a significant mathematical challenge for traditional classifiers.
+This project is a high-fidelity, full-stack Credit Risk Classification platform. It bridges the gap between raw data science and premium user experiences. Using an AI-driven predictive pipeline, the application classifies loan applicant default risks while providing a cinematic, interactive storytelling layer built with modern web technologies.
+
+## Key Features
+- **Cinematic Interactive UI**: A high-end scrolling experience powered by GSAP, Three.js, and Lenis for smooth, frame-based storytelling.
+- **Real-Time Risk Engine**: High-concurrency FastAPI backend providing sub-100ms inference for credit probability analysis.
+- **Advanced ML Pipeline**: Implementation of SMOTE balancing, Robust Scaling, and Optimized XGBoost ensembles.
+- **Unified Development**: Single-command startup for both frontend and backend environments.
+
+## Quick Start
+You can start both the Next.js frontend and FastAPI backend with a single command:
+```bash
+# Recommended for all platforms
+npm run dev:all
+
+# Windows Native Alternative
+.\start.ps1
+```
+Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
 
 ## Project Structure
 ```text
 CRC Project/
-├── assets/
+├── assets/               # Media and Model Assets
 │   ├── eda/              # Exploratory Analysis (Correlation, Overlap)
 │   ├── eval/             # Model Performance (Confusion Matrices, Threshold Tuning)
-│   └── models/           # Saved Model Pipelines (.pkl)
-├── data/                 # Raw/Processed Data (.csv)
+│   └── models/           # Production-ready Pickled Models (.pkl)
+├── backend/              # FastAPI High-Concurrency Engine
+│   ├── main.py           # API endpoints & CORS configuration
+│   └── utils.py          # Real-time risk scoring logic
+├── data/                 # Raw/Processed financial datasets
 ├── docs/                 # Workflow documentation and planning
-├── notebooks/
-│   ├── Project.ipynb     # Jupyter Notebook for experimental development
-│   ├── preprocessing.py  # Data cleaning and feature engineering
-│   ├── balancing.py      # SMOTE class balancing
-│   ├── eda.py            # Statistical analysis of raw data
-│   ├── eda_resampled.py  # Analysis of balanced data
-│   ├── train_model.py    # XGBoost and Baseline training
-│   ├── threshold_tuning.py # Probability cutoff analysis
-│   ├── optimize_f1.py    # Multi-metric threshold optimization
-│   └── visualize_signal.py # Signal diagnostic visualizations
-├── requirements.txt      # Project dependencies
-└── README.md             # Project documentation
+├── src/                  # Next.js 15+ Cinematic Frontend
+│   ├── app/              # App Router and Main Entry Point
+│   ├── components/       # Cinematic & Interactive UI Components
+│   ├── store/            # Zustand State Management
+│   └── styles/           # Global CSS and Tailwind Directives
+├── requirements.txt      # Python backend dependencies
+├── package.json          # Frontend dependencies & unified scripts
+└── .env.example          # Environment configuration template
 ```
 
-## Implementation Recommendation
+## Implementation Research & ML Methodology
 
 ### Optimal Threshold Selection
 Our mathematical analysis concludes that the **Default (0.50)** probability threshold is suboptimal for this specific credit risk profile. 
@@ -38,53 +54,36 @@ By analyzing the Precision-Recall trade-off, we identified an **Optimal Threshol
 ![F1 Optimization Curve](assets/eval/f1_optimization.png)
 ![Logistic Regression v2 Confusion Matrix](assets/eval/Logistic_Regression_v2_cm_0.4.png)
 
-| Factor | Baseline (0.50) | Optimized (0.40) | Impact |
-| :--- | :--- | :--- | :--- |
-| **Recall (Catch Rate)** | 54% | **93%** | **+39%** increase in protection. |
-| **F1-Score** | 0.23 | **0.30** | Maximum mathematical balance. |
+| Factor                  | Baseline (0.50) | Optimized (0.40) | Impact                           |
+| :---------------------- | :-------------- | :--------------- | :------------------------------- |
+| **Recall (Catch Rate)** | 54%             | **93%**          | **+39%** increase in protection. |
+| **F1-Score**            | 0.23            | **0.30**         | Maximum mathematical balance.    |
 
 > [!TIP]
 > **Conclusion**: For real-world deployment, setting the detection threshold to **0.40** provides the best survival rate for the bank by catching nearly every default before it happens, without significantly increasing the false alarm rate.
-
-## Methodology and Machine Learning Workflow
 
 ### Phase 1: Data Processing Strategy
 To ensure our model learns real-world patterns reliably without data leakage, we enforce strict data hygiene:
 - **Train-Test Split First**: The raw data is strictly split 80/20 before any statistics are calculated.
 - **Scikit-Learn Pipelines**:
   - **SimpleImputer**: Used exclusively to handle missing values based only on the training data mean.
-  - **StandardScaler**: Applied to all numeric features so that large-magnitude values do not computationally overwhelm smaller scales.
-  - **OrdinalEncoder**: Explicitly orders Education_Level (High School -> PhD).
-  - **OneHotEncoder**: Converts categorical variables into binary points.
+  - **StandardScaler**: Applied to all numeric features.
+  - **OrdinalEncoder**: Explicitly orders Education_Level stability.
+  - **OneHotEncoder**: Converts categorical variables into binary features.
 
 ### Phase 2: Feature Engineering
 #### Loan to Income Ratio
-Instead of having the algorithm guess the burden of a loan, we explicitly calculate the exact ratio of the requested Loan_Amount against income. A high ratio is functionally one of the most powerful predictors of default risk.
+Instead of having the algorithm guess the burden of a loan, we explicitly calculate the exact ratio of the requested Loan_Amount against income. This is functionally one of the most powerful predictors of default risk.
 
 #### Advanced Interaction Engineering
 We introduced synthetic interaction terms to create a stronger mathematical separation between classes:
-- **Risk Index**: (Loan_Amount / Income) / Credit_Score. This captures the magnitude of risk by weighting the burden of debt against the applicant's reputation.
-- **Stability Index**: Credit_Score * Employment_Years. This rewards long-term employment stability combined with high credit honor.
+- **Risk Index**: (Loan_Amount / Income) / Credit_Score.
+- **Stability Index**: Credit_Score * Employment_Years.
 
 ### Phase 3: Model Training and Optimization
-
 #### Addressing Class Imbalance with SMOTE
-In our initial analysis, we found a severe class imbalance. This caused baseline models to become biased towards the majority class. We utilized Synthetic Minority Over-sampling Technique (SMOTE) to synthesize new, mathematically plausible minority examples using a K-Nearest Neighbors approach.
+We utilized Synthetic Minority Over-sampling Technique (SMOTE) to synthesize new, mathematically plausible minority examples using a K-Nearest Neighbors approach.
 
 #### Gradient Boosting and Hyperparameter Tuning
-We deployed XGBoost (eXtreme Gradient Boosting) to handle high variance. We utilized RandomizedSearchCV targeting Recall specifically, as missing a default is significantly more expensive than accidentally rejecting a safe customer.
+We deployed XGBoost (eXtreme Gradient Boosting) to handle high variance. Missing a default is significantly more expensive than accidentally rejecting a safe customer.
 
-#### Probability Threshold Tuning
-Standard models use a generic 0.50 probability cutoff. However, credit risk is an asymmetric problem. We implement a strategy to lower the threshold (e.g., to 0.30) to catch nearly 100% of defaults, allowing the business to calibrate its specific risk appetite.
-
-## Performance Diagnosis and Results
-
-### The Signal to Noise Barrier
-Our signal diagnostic analysis revealed that for this specific dataset, standard features overlap heavily between safe and defaulting customers. This high class overlap (often > 90%) makes it difficult for standard models to find a clear decision boundary without threshold tuning.
-
-### Final Summary of Model Performance
-| Strategy             | Best Metric             | Significance                                                     |
-| :------------------- | :---------------------- | :--------------------------------------------------------------- |
-| **Baseline**         | Accuracy (86%)          | Misleading due to imbalance; missed most defaults.               |
-| **SMOTE**            | F1-Score (Improved)     | Balanced the classes, forcing the model to acknowledge defaults. |
-| **Threshold Tuning** | **Recall (Up to 100%)** | Provides a full-risk alert setting for the business.             |
