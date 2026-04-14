@@ -1,6 +1,6 @@
 # Credit Risk Classification
 
-![Python](https://img.shields.io/badge/Python-3.14-3776AB?style=flat&logo=python&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-15+-000000?style=flat&logo=nextdotjs&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat&logo=fastapi&logoColor=white) ![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwindcss&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.5.2-F7931E?style=flat&logo=scikit-learn&logoColor=white) ![Zustand](https://img.shields.io/badge/Zustand-State-433923?style=flat&logo=react&logoColor=white) ![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=flat&logo=greensock&logoColor=white) ![Three.js](https://img.shields.io/badge/Three.js-r171-000000?style=flat&logo=threedotjs&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.1-20BEFF?style=flat&logo=xgboost&logoColor=white) ![KNN](https://img.shields.io/badge/KNN-v2.1-FFD700?style=flat&logo=scikit-learn&logoColor=black) ![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?style=flat&logo=render&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=flat&logo=vercel&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-300A24?style=flat&logo=github&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-15+-000000?style=flat&logo=nextdotjs&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat&logo=fastapi&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white) ![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwindcss&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.5.2-F7931E?style=flat&logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.1-20BEFF?style=flat&logo=xgboost&logoColor=white) ![KNN](https://img.shields.io/badge/KNN-v2.1-yellow?style=flat&logo=analytics&logoColor=white) ![Framer_Motion](https://img.shields.io/badge/Framer_Motion-12.0-0055FF?style=flat&logo=framer&logoColor=white) ![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=flat&logo=greensock&logoColor=white) ![Zustand](https://img.shields.io/badge/Zustand-State-433923?style=flat&logo=react&logoColor=white) ![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?style=flat&logo=render&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=flat&logo=vercel&logoColor=white)
 
 ## Overview
 This project is a high-fidelity, full-stack Credit Risk Classification platform. It bridges the gap between raw data science and premium user experiences. Using an AI-driven predictive pipeline, the application classifies loan applicant default risks while providing a cinematic, interactive storytelling layer built with modern web technologies.
@@ -40,35 +40,35 @@ Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
 ## Project Structure
 ```text
 Credit-risk Classification/
+├── .gitignore            # Deployment exclusion rules (Python/Node/OS)
+├── render.yaml           # Blueprint for Render Backend Deployment
+├── package.json          # Frontend scripts and unified dev commands
+├── start.ps1             # All-in-one Windows Dev Startup
 ├── assets/               # Analytics and Model Assets
 │   ├── models/           # Production-ready Binary Artifacts (.pkl)
+│   │   ├── KNN_v2.pkl
 │   │   ├── Logistic_Regression_v2.pkl
+│   │   ├── Optimized_Random_Forest_v2.pkl
+│   │   ├── XGBoost_v2.pkl
 │   │   └── preprocessor.pkl
 │   ├── eda/              # Exploratory Analysis (Correlation, Overlap)
-│   └── eval/             # Model Performance (Confusion Matrices, Threshold Tuning)
-├── docs/                 # Workflow documentation and planning
-├── notebooks/            # ML Development & Research (Advanced Analysis)
+│   └── eval/             # Performance (metrics_log.csv, Confusion Matrices)
 ├── backend/              # Optimized Prediction Engine (FastAPI)
-│   ├── __init__.py       # Initializes the backend package
-│   ├── main.py           # API Entrypoint and CORS config
-│   └── utils.py          # Real-time Risk Engine class
-├── data/                 # Financial Data Repository
-│   └── raw/              # Primary Source: Loan_Data.csv
+│   ├── main.py           # API Entrypoint with dynamic Port/Host binding
+│   └── utils.py          # Real-time Multi-Model Risk Engine class
 ├── public/               # Static Media Assets
-│   └── frames/           # Cinematic Image Sequence (ezgif-frame-xxx.jpg)
+│   ├── assets/           # UI textures (exosphere, stars)
+│   └── frames/           # Cinematic Sequence (frame-001.jpg to frame-240.jpg)
 ├── src/                  # Next.js 15 Cinematic Frontend
 │   ├── app/              # App Router and Global Styles
-│   │   ├── layout.tsx    # Root layout with Smooth Scroll
-│   │   ├── page.tsx      # Landing Dashboard
-│   │   └── globals.css   # Tailored Production CSS
+│   │   ├── layout.tsx    # Root layout with Smooth Scroll integration
+│   │   └── page.tsx      # Multi-model Landing Dashboard
 │   ├── components/       # Modular UI Components
-│   │   ├── cinematic/    # Hero, ScrollSequence, StorySection, Preloader
-│   │   └── interactive/  # RiskForm, ResultsDisplay
-│   └── store/            # State Management (Zustand)
-├── render.yaml           # Blueprint for Render Deployment
-├── requirements.txt      # Inference-optimized Dependencies
-├── package.json          # Frontend scripts and unified dev commands
-└── start.ps1             # All-in-one Windows Dev Startup
+│   │   ├── cinematic/    # CustomCursor, Hero, ScrollSequence, StorySection
+│   │   └── interactive/  # RiskForm, ResultsDisplay (High-precision)
+│   └── store/            # State Management (Zustand: useRiskStore)
+├── notebooks/            # Research & Model Development
+└── requirements.txt      # Inference-optimized Backend Dependencies
 ```
 
 ## Implementation Research & ML Methodology
