@@ -126,11 +126,14 @@ export default function RiskForm() {
                                 <input
                                     type="number"
                                     name="income"
+                                    max="500000"
+                                    min="0"
                                     value={formData.income}
                                     onChange={handleChange}
                                     className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
                                 />
                                 <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                                <span className="absolute right-0 -bottom-6 text-[10px] font-mono text-white/30 uppercase tracking-widest">max: 500000</span>
                             </div>
 
                             {/* Loan Amount */}
@@ -141,11 +144,14 @@ export default function RiskForm() {
                                 <input
                                     type="number"
                                     name="loanAmount"
+                                    max="500000"
+                                    min="0"
                                     value={formData.loanAmount}
                                     onChange={handleChange}
                                     className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
                                 />
                                 <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                                <span className="absolute right-0 -bottom-6 text-[10px] font-mono text-white/30 uppercase tracking-widest">max: 500000</span>
                             </div>
 
                             {/* Credit Score */}
