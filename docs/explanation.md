@@ -70,6 +70,21 @@ Every model we built went through a **4-Stage Evolution**. Understanding this jo
 
 *   **Why it was Rejected**: In scientific terms, XGBoost is "High-Variance." On this specific noisy dataset, it was trying to build a complex skyscraper on a foundation of sand. It simply couldn't find the Signal as well as Logistic Regression.
 
+### 4. K-Nearest Neighbors (The Neighbor Watch)
+*   **Smoothing the Noise**: By strictly setting `n_neighbors = 21`, we force the model to look at a large group of neighbors before making a decision. This "averages out" the messy data overlap we saw in Module 1, preventing the model from being fooled by single outliers.
+*   **Risk-Sensitive Tuning**: KNN also benefits immensely from our **0.40 threshold**. It transforms the model from a passive observer into a cautious guardian, raising the recall from 46% to a solid **64%**.
+*   **Confusion Matrix**:
+
+  ![KNN v2 (Baseline 0.50)](../assets/eval/KNN_v2_cm_0.5.png)
+  ![KNN v2 (Optimized 0.40)](../assets/eval/KNN_v2_cm_0.4.png)
+
+### 5. Summary: The Big Picture (Comparative Visualization)
+To visualize exactly how each model reacted to our threshold tuning across **Recall**, **Precision**, and **F1-Score**, we can look at this comprehensive comparison:
+
+![Model Performance Comparison](../assets/eval/model_performance_comparison.png)
+
+*   **Observation**: Notice the clear separation between the Blue lines (0.50 threshold) and the Orange lines (0.40 threshold). While precision takes a small hit, the massive gain in **Recall** (Safety) justifies the trade-off for a credit-risk application.
+
 ---
 
 ## Module 4: Practical Knowledge (The Code)
@@ -100,4 +115,4 @@ If you are starting your own model today:
 > Why did we keep the v1 models?
 > **Answer**: To prove that our v2 choices (Tuning and Thresholds) actually made the system better. Data science is about comparison.
 
-**Happy Coding, Student!**
+**Happy Coding**
