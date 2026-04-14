@@ -24,9 +24,9 @@ export default function ScrollSequence({ frameCount }: ScrollSequenceProps) {
 
     for (let i = 1; i <= frameCount; i++) {
         const img = new Image();
-        // Frame naming: ezgif-frame-001.jpg, ezgif-frame-002.jpg...
+        // Frame naming: frame-001.jpg, frame-002.jpg...
         const frameIndex = i.toString().padStart(3, '0');
-        img.src = `/frames/ezgif-frame-${frameIndex}.jpg`;
+        img.src = `/frames/frame-${frameIndex}.jpg`;
         
         img.onload = () => {
           loadedCount++;

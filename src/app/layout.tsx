@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter, Roboto_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/cinematic/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,6 +11,13 @@ const inter = Inter({
 const robotoMono = Roboto_Mono({
   subsets: ["latin"],
   variable: "--font-roboto-mono",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +32,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+      </head>
       <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased`}
+        className={`${inter.variable} ${robotoMono.variable} ${spaceGrotesk.variable} antialiased selection:bg-primary/30 min-h-screen bg-background text-foreground`}
       >
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

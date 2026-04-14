@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 export default function CustomCursor() {
@@ -50,7 +50,7 @@ export default function CustomCursor() {
     >
       <div className="relative flex items-center justify-center">
         {/* Core Dot */}
-        <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_10px_rgba(124,58,237,0.8)]" />
+        <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_10px_rgba(195,245,255,0.8)]" />
         
         {/* Trailing Outer Ring */}
         <div className="absolute w-8 h-8 rounded-full border border-primary/20 animate-pulse-slow" />

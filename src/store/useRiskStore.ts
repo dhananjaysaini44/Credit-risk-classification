@@ -15,7 +15,9 @@ interface RiskState {
     housingStatus: string;
   };
   loadProgress: number;
+  selectedModel: string;
   setLoadProgress: (progress: number) => void;
+  setSelectedModel: (model: string) => void;
   setPrediction: (prediction: number, probability: number) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -24,6 +26,7 @@ interface RiskState {
 
 export const useRiskStore = create<RiskState>((set) => ({
   loadProgress: 0,
+  selectedModel: 'Logistic Regression',
   prediction: null,
   probability: null,
   isLoading: false,
@@ -38,6 +41,7 @@ export const useRiskStore = create<RiskState>((set) => ({
     housingStatus: 'Rent',
   },
   setLoadProgress: (progress) => set({ loadProgress: progress }),
+  setSelectedModel: (model) => set({ selectedModel: model }),
   setPrediction: (prediction, probability) => set({ prediction, probability, isLoading: false }),
   setLoading: (loading) => set({ isLoading: loading }),
   setError: (error) => set({ error: error, isLoading: false }),
