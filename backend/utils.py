@@ -13,20 +13,18 @@ DATA_PATH = os.path.join(BASE_DIR, 'data', 'credit_risk_dataset.csv')
 
 class RiskModel:
     def __init__(self):
-        self.model = None
+        self.models = {}
         self.preprocessor = None
+        self.model_files = {
+            'Logistic Regression': 'Logistic_Regression_v2.pkl',
+            'Random Forest': 'Optimized_Random_Forest_v2.pkl',
+            'XGBoost': 'XGBoost_v2.pkl',
+            'KNN': 'KNN_v2.pkl'
+        }
         self.load()
 
     def load(self):
-        # 1. Load Model
-        model_path = os.path.join(MODELS_DIR, 'Logistic_Regression_v2.pkl')
-        if os.path.exists(model_path):
-            self.model = joblib.load(model_path)
-            print(f"Success: Loaded model from {model_path}")
-        else:
-            print(f"Critical: Model not found at {model_path}")
-
-        # 2. Load Preprocessor
+        # 1. Load Preprocessor
         pre_path = os.path.join(MODELS_DIR, 'preprocessor.pkl')
         if os.path.exists(pre_path):
             self.preprocessor = joblib.load(pre_path)
@@ -34,8 +32,29 @@ class RiskModel:
         else:
             print(f"Error: Preprocessor not found at {pre_path}")
 
-    def predict(self, input_data: dict):
-        if not self.model or not self.preprocessor:
+        # 2. Load all available models
+        for name, filename in self.model_files.items():
+            path = os.path.join(MODELS_DIR, filename)
+            if os.path.exists(path):
+                self.models[name] = joblib.load(path)
+                print(f"Success: Loaded {name} from {path}")
+            else:
+                print(f"Critical: {name} not found at {path}")
+
+    def predict(self, input_data: dict, model_name: str):
+        """
+        Predict probability and class using the specified model.
+        Args:
+            input_data: Dict of raw feature values
+            model_name: Name of the model to use (must be in self.models)
+        """
+        model = self.models.get(model_name)
+        if not model:
+            print(f"Error: Model '{model_name}' not found or failed to load.")
+            return None, None
+            
+        if not self.preprocessor:
+            print("Error: Preprocessor missing.")
             return None, None
 
         # Convert input to DataFrame
@@ -53,17 +72,26 @@ class RiskModel:
         }
         df = df.rename(columns=mapping)
 
-        # Feature Engineering
-        df['Loan_to_Income_Ratio'] = df['Loan_Amount'] / df['Income']
+        # Feature Engineering (Must match training logic)
+        df['Loan_to_Income_Ratio'] = df['Loan_Amount'] / (df['Income'] + 1)
         df['Stability_Index'] = df['Credit_Score'] * df['Employment_Years']
         df['Risk_Index'] = (df['Loan_Amount'] / (df['Income'] + 1)) / (df['Credit_Score'] + 1)
 
         # Preprocess
         X_processed = self.preprocessor.transform(df)
         
+        # Eliminate UserWarning and ValueError by providing exact feature names
+        try:
+            # Strip prefixes like 'num__', 'nom__', 'ord__' from names
+            feature_names = [name.split('__')[-1] for name in self.preprocessor.get_feature_names_out()]
+            X_final = pd.DataFrame(X_processed, columns=feature_names)
+        except Exception:
+            # Fallback if names can't be resolved
+            X_final = X_processed
+
         # Predict
-        # Threshold 0.40 as per user's train_model.py
-        probs = self.model.predict_proba(X_processed)[:, 1]
+        # Threshold 0.40 as per user's requirement
+        probs = model.predict_proba(X_final)[:, 1]
         prediction = (probs >= 0.40).astype(int)[0]
         
         return int(prediction), float(probs[0])

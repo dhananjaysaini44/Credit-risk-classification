@@ -27,6 +27,7 @@ class PredictionInput(BaseModel):
   employmentYears: int
   educationLevel: str
   housingStatus: str
+  modelType: str = "Logistic Regression"
 
 @app.get("/")
 async def root():
@@ -36,10 +37,20 @@ async def root():
 async def predict_risk(input_data: PredictionInput):
     try:
         data_dict = input_data.model_dump()
-        prediction, probability = risk_engine.predict(data_dict)
+        model_name = data_dict.pop('modelType')
+        
+        # Robust validation of modelType
+        if model_name not in risk_engine.models:
+            available = list(risk_engine.models.keys())
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Invalid modelType '{model_name}'. Available models: {available}"
+            )
+            
+        prediction, probability = risk_engine.predict(data_dict, model_name=model_name)
         
         if prediction is None:
-            raise HTTPException(status_code=500, detail="Model Engine Failure")
+            raise HTTPException(status_code=500, detail="Prediction Engine failure")
             
         return {
             "prediction": int(prediction),
@@ -51,4 +62,6 @@ async def predict_risk(input_data: PredictionInput):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run(app, host=host, port=port)
