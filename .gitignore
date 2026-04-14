@@ -9,6 +9,9 @@ data/
 # Model Weights (Allow ONLY production models to be committed)
 assets/models/*.pkl
 !assets/models/Logistic_Regression_v2.pkl
+!assets/models/Optimized_Random_Forest_v2.pkl
+!assets/models/XGBoost_v2.pkl
+!assets/models/KNN_v2.pkl
 !assets/models/preprocessor.pkl
 
 # Visualizations (Optional to ignore if you want to show them off, but we will keep them tracked for the README)
