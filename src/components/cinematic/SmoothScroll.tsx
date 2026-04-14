@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { ReactLenis } from 'lenis/react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import ScrollSequence from './ScrollSequence';
 
 interface SmoothScrollProps {
@@ -12,12 +12,8 @@ interface SmoothScrollProps {
 export default function SmoothScroll({ children }: SmoothScrollProps) {
   const { scrollY } = useScroll();
   
-  // Parallax ratio 0.5: Background moves at exactly half speed
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, -500]);
+  // Parallax overlay opacity calculation
   const overlayOpacity = useTransform(scrollY, [0, 600], [1, 0.4]); 
-
-  // Smooth springs for high-end cinematic feel
-  const smoothY = useSpring(backgroundY, { stiffness: 50, damping: 20 });
 
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>

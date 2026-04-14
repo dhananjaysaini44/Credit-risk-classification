@@ -26,7 +26,7 @@ export default function ResultsDisplay({ onReset }: ResultsDisplayProps) {
       if (!response.ok) throw new Error('Model Engine Error');
       const result = await response.json();
       setPrediction(result.prediction, result.probability);
-    } catch (err) {
+    } catch {
       setError('Evaluation Failed');
     } finally {
       setLoading(false);
