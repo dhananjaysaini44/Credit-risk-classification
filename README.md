@@ -6,7 +6,7 @@
 This project is a high-fidelity, full-stack Credit Risk Classification platform. It bridges the gap between raw data science and premium user experiences. Using an AI-driven predictive pipeline, the application classifies loan applicant default risks while providing a cinematic, interactive storytelling layer built with modern web technologies.
 
 ## Key Features
-- **Cinematic Interactive UI**: A high-end scrolling experience powered by GSAP, Three.js, and Lenis for smooth, frame-based storytelling.
+- **Cinematic Interactive UI**: A high-end scrolling experience powered by GSAP and Lenis for smooth, frame-based storytelling.
 - **Real-Time Risk Engine**: High-concurrency FastAPI backend providing sub-100ms inference for credit probability analysis.
 - **Advanced ML Pipeline**: Implementation of SMOTE balancing, Robust Scaling, and Optimized XGBoost ensembles.
 - **Unified Development**: Single-command startup for both frontend and backend environments.
@@ -40,10 +40,6 @@ Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
 ## Project Structure
 ```text
 Credit-risk Classification/
-├── .gitignore            # Deployment exclusion rules (Python/Node/OS)
-├── render.yaml           # Blueprint for Render Backend Deployment
-├── package.json          # Frontend scripts and unified dev commands
-├── start.ps1             # All-in-one Windows Dev Startup
 ├── assets/               # Analytics and Model Assets
 │   ├── models/           # Production-ready Binary Artifacts (.pkl)
 │   │   ├── KNN_v2.pkl
@@ -68,7 +64,11 @@ Credit-risk Classification/
 │   │   └── interactive/  # RiskForm, ResultsDisplay (High-precision)
 │   └── store/            # State Management (Zustand: useRiskStore)
 ├── notebooks/            # Research & Model Development
-└── requirements.txt      # Inference-optimized Backend Dependencies
+├── requirements.txt      # Inference-optimized Backend Dependencies
+├── .gitignore            # Deployment exclusion rules (Python/Node/OS)
+├── render.yaml           # Blueprint for Render Backend Deployment
+├── package.json          # Frontend scripts and unified dev commands
+├── start.ps1             # All-in-one Windows Dev Startup
 ```
 
 ## Implementation Research & ML Methodology
