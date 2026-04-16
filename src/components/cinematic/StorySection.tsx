@@ -26,16 +26,16 @@ export default function StorySection({
       viewport={{ once: true }}
       className="glass-panel p-8 glitch-hover group relative overflow-hidden h-full flex flex-col"
     >
-      <div className="flex justify-between items-start mb-8 relative z-10">
-        <span className="font-headline text-primary/30 text-5xl font-bold tracking-tighter">
+      <div className="flex justify-between items-start mb-6 relative z-10">
+        <span className="font-headline text-primary/30 text-4xl md:text-5xl font-bold tracking-tighter">
           {number}
         </span>
-        <span className="material-symbols-outlined text-primary group-hover:rotate-90 transition-transform duration-500 text-3xl">
+        <span className="material-symbols-outlined text-primary group-hover:rotate-90 transition-transform duration-500 text-2xl md:text-3xl">
           {icon}
         </span>
       </div>
 
-      <h3 className="font-headline text-2xl text-white mb-6 relative z-10 tracking-tight">
+      <h3 className="font-headline text-xl md:text-2xl text-white mb-6 relative z-10 tracking-tight">
         {title}
       </h3>
 

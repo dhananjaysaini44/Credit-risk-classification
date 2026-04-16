@@ -167,6 +167,7 @@ export default function RiskForm() {
                                     className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
                                 />
                                 <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                                <span className="absolute right-0 -bottom-6 text-[10px] font-mono text-white/30 uppercase tracking-widest">max: 850</span>
                             </div>
 
                             {/* Employment Length */}
@@ -185,58 +186,86 @@ export default function RiskForm() {
                             </div>
 
                             {/* Housing Status */}
-                            <div className="relative group/field">
+                            <div className="relative group/field md:col-span-2 lg:col-span-1">
                                 <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
                                     Housing Status
                                 </label>
-                                <select
-                                    name="housingStatus"
-                                    value={formData.housingStatus}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono appearance-none text-[22px]"
-                                >
-                                    <option value="Own" className="bg-[#0a0c10]">Own</option>
-                                    <option value="Mortgage" className="bg-[#0a0c10]">Mortgage</option>
-                                    <option value="Rent" className="bg-[#0a0c10]">Rent</option>
-                                </select>
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                                <div className="flex flex-wrap gap-2">
+                                    {['Own', 'Mortgage', 'Rent'].map((status) => (
+                                        <button
+                                            key={status}
+                                            type="button"
+                                            onClick={() => {
+                                                setFormData(prev => ({ ...prev, housingStatus: status }));
+                                                updateData({ housingStatus: status });
+                                            }}
+                                            className={`flex-1 min-w-[80px] py-4 px-2 border font-mono text-[11px] uppercase tracking-widest transition-all duration-500 relative overflow-hidden group/opt ${formData.housingStatus === status
+                                                ? 'bg-primary text-black shadow-[0_0_20px_rgba(195,245,255,0.3)] border-primary'
+                                                : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
+                                                }`}
+                                        >
+                                            {status}
+                                            {formData.housingStatus === status && (
+                                                <motion.div layoutId="housing-active" className="absolute bottom-0 left-0 h-[2px] w-full bg-primary" />
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Education Level */}
-                            <div className="relative group/field">
+                            <div className="relative group/field md:col-span-2">
                                 <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
                                     Education Level
                                 </label>
-                                <select
-                                    name="educationLevel"
-                                    value={formData.educationLevel}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono appearance-none text-[22px]"
-                                >
-                                    <option value="High School" className="bg-[#0a0c10]">High School</option>
-                                    <option value="Bachelors" className="bg-[#0a0c10]">Bachelors</option>
-                                    <option value="Masters" className="bg-[#0a0c10]">Masters</option>
-                                    <option value="PhD" className="bg-[#0a0c10]">PhD</option>
-                                </select>
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                    {['High School', 'Bachelors', 'Masters', 'PhD'].map((level) => (
+                                        <button
+                                            key={level}
+                                            type="button"
+                                            onClick={() => {
+                                                setFormData(prev => ({ ...prev, educationLevel: level }));
+                                                updateData({ educationLevel: level });
+                                            }}
+                                            className={`py-4 px-1 border font-mono text-[10px] uppercase tracking-widest transition-all duration-500 relative ${formData.educationLevel === level
+                                                ? 'bg-primary text-black shadow-[0_0_20px_rgba(195,245,255,0.3)] border-primary'
+                                                : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
+                                                }`}
+                                        >
+                                            {level}
+                                            {formData.educationLevel === level && (
+                                                <motion.div layoutId="edu-active" className="absolute bottom-0 left-0 h-[2px] w-full bg-primary" />
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Predictive Model Dropdown */}
-                            <div className="relative group/field">
+                            <div className="relative group/field md:col-span-2">
                                 <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Classifier Model
+                                    Classifier Model Engine
                                 </label>
-                                <select
-                                    value={selectedModel}
-                                    onChange={(e) => setSelectedModel(e.target.value)}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono appearance-none text-[22px] cursor-pointer"
-                                >
-                                    <option value="Logistic Regression" className="bg-[#0a0c10]">Logistic Regression</option>
-                                    <option value="Random Forest" className="bg-[#0a0c10]">Random Forest</option>
-                                    <option value="XGBoost" className="bg-[#0a0c10]">XGBoost</option>
-                                    <option value="KNN" className="bg-[#0a0c10]">KNN</option>
-                                </select>
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                    {['Logistic Regression', 'Random Forest', 'XGBoost', 'KNN'].map((model) => (
+                                        <button
+                                            key={model}
+                                            type="button"
+                                            onClick={() => setSelectedModel(model)}
+                                            className={`py-5 px-2 border font-mono text-[10px] uppercase tracking-widest transition-all duration-500 relative ${selectedModel === model
+                                                ? 'bg-primary text-black shadow-[0_0_20px_rgba(195,245,255,0.3)] border-primary'
+                                                : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
+                                                }`}
+                                        >
+                                            {model === 'Logistic Regression' ? 'LOGISTIC REGRESSION' :
+                                                model === 'Random Forest' ? 'RANDOM FOREST' :
+                                                    model === 'XGBoost' ? 'XGBOOST' : 'K-NEAREST NEIGHBOR'}
+                                            {selectedModel === model && (
+                                                <motion.div layoutId="model-active" className="absolute bottom-0 left-0 h-[2px] w-full bg-primary" />
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             <div className="md:col-span-2 pt-10">

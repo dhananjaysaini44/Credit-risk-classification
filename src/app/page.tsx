@@ -5,7 +5,18 @@ import StorySection from "@/components/cinematic/StorySection";
 import RiskForm from "@/components/interactive/RiskForm";
 import CustomCursor from "@/components/cinematic/CustomCursor";
 
+import { useEffect } from "react";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
 export default function Home() {
+  useEffect(() => {
+    // Ensure ScrollTrigger measures the full height correctly after layout settles
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="relative bg-transparent min-h-screen selection:bg-primary/30">
       <CustomCursor />
@@ -128,13 +139,13 @@ export default function Home() {
       </section>
 
       {/* Footer Telemetry */}
-      <footer className="py-12 px-8 border-t border-white/5 bg-background/50 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 opacity-40">
-          <div className="flex items-center gap-4">
-            <span className="material-symbols-outlined text-sm">satellite_alt</span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.3em]">Mastering the Margin / Analytical Node Beta</span>
+      <footer className="py-6 px-8 border-t border-white/5 bg-background/50 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 opacity-30 hover:opacity-100 transition-opacity duration-500">
+          <div className="flex items-center gap-3">
+            <span className="material-symbols-outlined text-[12px]">satellite_alt</span>
+            <span className="font-mono text-[8px] uppercase tracking-[0.3em] whitespace-nowrap">Mastering the Margin / Analytical Node Beta</span>
           </div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.3em]">All telemetry active // 2016-2024 Dataset</p>
+          <p className="font-mono text-[8px] uppercase tracking-[0.3em] whitespace-nowrap">All telemetry active // 2016-2024 Dataset</p>
         </div>
       </footer>
     </main>

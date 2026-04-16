@@ -3,7 +3,7 @@
 import { ReactNode } from 'react';
 import { ReactLenis } from 'lenis/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import ScrollSequence from './ScrollSequence';
+import CinematicEngine from './CinematicEngine';
 
 interface SmoothScrollProps {
   children: ReactNode;
@@ -20,7 +20,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       {/* Managed Parallax Background */}
       <div className="fixed inset-0 z-[-1] bg-[#000000] overflow-hidden">
         <div className="absolute inset-0">
-          <ScrollSequence frameCount={240} />
+          <CinematicEngine frameCount={240} />
         </div>
         <motion.div 
           className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/60 via-transparent to-black"

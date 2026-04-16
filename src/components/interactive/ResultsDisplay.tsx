@@ -99,9 +99,9 @@ export default function ResultsDisplay({ onReset }: ResultsDisplayProps) {
       </div>
 
       {/* Parameter Telemetry Summary */}
-      <div className="relative z-10 bg-muted/5 border border-white/5 p-6 rounded-sm">
-        <h4 className="font-headline text-[13px] uppercase tracking-[0.3em] text-foreground/40 mb-5 pb-2 border-b border-white/5">Analyzed Profile Telemetry</h4>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 gap-x-8">
+      <div className="relative z-10 bg-muted/5 border border-white/5 p-4 md:p-6 rounded-sm">
+        <h4 className="font-headline text-[11px] md:text-[13px] uppercase tracking-[0.3em] text-foreground/40 mb-5 pb-2 border-b border-white/5">Analyzed Profile Telemetry</h4>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-4 md:gap-x-8">
           <div className="space-y-1">
             <p className="text-[13px] text-white/20 uppercase font-mono">Age</p>
             <p className="text-[16px] font-mono text-white">{data.age}</p>
@@ -147,12 +147,12 @@ export default function ResultsDisplay({ onReset }: ResultsDisplayProps) {
           <div className="text-[12px] font-mono text-primary/40 uppercase bg-primary/5 px-3 py-1.5 border border-primary/10">STABILITY: NOMINAL</div>
         </div>
 
-        <div className="flex items-center gap-4 w-full md:w-auto">
-          <div className="relative flex-1 md:flex-none">
+        <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto mt-4 md:mt-0">
+          <div className="relative w-full md:w-auto">
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="appearance-none bg-[#0a0c10]/40 border border-white/10 text-white text-[11px] font-mono uppercase pl-4 pr-10 py-2.5 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none cursor-pointer hover:bg-[#0a0c10]/60 transition-all w-full md:w-[180px] rounded-none"
+              className="appearance-none bg-[#0a0c10]/40 border border-white/10 text-white text-[11px] font-mono uppercase pl-4 pr-10 py-3 focus:border-primary/50 focus:ring-1 focus:ring-primary/20 outline-none cursor-pointer hover:bg-[#0a0c10]/60 transition-all w-full md:w-[180px] rounded-none"
             >
               <option value="Logistic Regression">Logistic Regression</option>
               <option value="Random Forest">Random Forest</option>
@@ -167,7 +167,7 @@ export default function ResultsDisplay({ onReset }: ResultsDisplayProps) {
           <button
             onClick={handleReEvaluate}
             disabled={isLoading}
-            className="group/eval bg-primary/10 border border-primary/20 hover:bg-primary hover:text-[#0a0c10] text-primary text-[11px] font-mono uppercase px-8 py-2.5 transition-all duration-300 disabled:opacity-50 flex items-center gap-3 relative overflow-hidden"
+            className="group/eval w-full md:w-auto bg-primary/10 border border-primary/20 hover:bg-primary hover:text-[#0a0c10] text-primary text-[11px] font-mono uppercase px-8 py-3 transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 relative overflow-hidden"
           >
             {isLoading ? (
               <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />

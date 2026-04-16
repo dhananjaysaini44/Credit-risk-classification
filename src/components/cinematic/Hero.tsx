@@ -11,9 +11,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-          className="font-headline font-bold text-6xl md:text-8xl tracking-tightest leading-none text-primary mb-8"
+          className="font-headline font-bold text-5xl md:text-8xl tracking-tightest leading-[1.1] md:leading-none text-primary mb-8"
         >
-          <span className="inline-block whitespace-nowrap">
+          <span className="inline-block">
             Mastering the <span className="text-white">Margin</span>
           </span>
           <br />
@@ -24,7 +24,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ duration: 1, delay: 1 }}
-          className="font-body text-lg md:text-2xl text-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
+          className="font-body text-base md:text-2xl text-foreground max-w-2xl mx-auto mb-12 leading-relaxed px-4"
         >
           An interactive deep-dive into AI-driven credit risk assessment and high-fidelity predictive modeling.
         </motion.p>
@@ -33,15 +33,15 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="flex flex-col md:flex-row gap-6 justify-center items-center"
+          className="flex flex-row gap-4 justify-center items-center px-6"
         >
-          <div className="flex items-center gap-3 px-6 py-2 bg-muted/20 border-l-2 border-primary backdrop-blur-sm">
-            <span className="material-symbols-outlined text-primary text-base animate-pulse">radar</span>
-            <span className="font-headline text-[10px] uppercase tracking-[0.2em] text-primary font-medium">Current Models - 4</span>
+          <div className="flex items-center gap-3 px-6 py-3 bg-muted/20 border-l-2 border-primary backdrop-blur-sm">
+            <span className="material-symbols-outlined text-primary text-[14px]">radar</span>
+            <span className="font-headline text-[9px] uppercase tracking-[0.3em] text-primary">Models: 04</span>
           </div>
-          <div className="flex items-center gap-3 px-6 py-2 bg-muted/20 border-l-2 border-secondary backdrop-blur-sm">
-            <span className="material-symbols-outlined text-secondary text-base">warning</span>
-            <span className="font-headline text-[10px] uppercase tracking-[0.2em] text-secondary font-medium">FineTuning Required</span>
+          <div className="flex items-center gap-3 px-6 py-3 bg-muted/20 border-l-2 border-secondary backdrop-blur-sm">
+            <span className="material-symbols-outlined text-secondary text-[14px]">warning</span>
+            <span className="font-headline text-[9px] uppercase tracking-[0.3em] text-secondary">FineTuning required</span>
           </div>
         </motion.div>
       </div>
