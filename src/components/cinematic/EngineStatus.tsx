@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function EngineStatus() {
     const [status, setStatus] = useState<'STOPPED' | 'INITIALIZING' | 'ACTIVE'>('STOPPED');
@@ -27,10 +27,11 @@ export default function EngineStatus() {
                 } else {
                     throw new Error('Not Operational');
                 }
-            } catch (err: any) {
+            } catch (err) {
+                const error = err as Error;
                 clearTimeout(timeoutId);
-                const isTimeout = err.name === 'AbortError';
-                console.error(isTimeout ? "Connection timed out after 60s" : "Connectivity probe failed:", err);
+                const isTimeout = error.name === 'AbortError';
+                console.error(isTimeout ? "Connection timed out after 60s" : "Connectivity probe failed:", error);
 
                 setTimeout(() => {
                     setStatus('STOPPED');
