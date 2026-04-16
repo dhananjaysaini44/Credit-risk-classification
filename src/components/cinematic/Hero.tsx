@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import EngineStatus from './EngineStatus';
 
 export default function Hero() {
   return (
@@ -44,6 +45,8 @@ export default function Hero() {
             <span className="font-headline text-[9px] uppercase tracking-[0.3em] text-secondary">FineTuning required</span>
           </div>
         </motion.div>
+
+        <EngineStatus />
       </div>
 
       {/* Decorative Scanline */}
