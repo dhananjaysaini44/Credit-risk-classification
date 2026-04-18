@@ -139,6 +139,7 @@ We defined a strict **Production Benchmark**:
 At the default 0.50, our safety (Recall) was too low. At 0.30, our reliability (Accuracy) collapsed to 44.6%. The **0.35 threshold** is our "Sweet Spot" because it is the most aggressive safety setting that still maintains a majority reliability (85.8% Recall and 51.8% Accuracy).
 
 **Selected Model Confusion Matrix (Threshold 0.35):**
+
 ![Logistic Regression Confusion Matrix](../assets_2/eval/Logistic_Regression_cm_0.35.png)
 
 > [!NOTE]
