@@ -1,9 +1,0 @@
-Model,Version,Threshold,Accuracy,Precision,Recall,F1-Score
-Logistic Regression,v2,0.5,0.5000,0.1471,0.5357,0.2308
-Logistic Regression,v2,0.4,0.4000,0.1806,0.9286,0.3023
-Optimized Random Forest,v2,0.5,0.7850,0.1739,0.1429,0.1569
-Optimized Random Forest,v2,0.4,0.7000,0.1800,0.3214,0.2308
-XGBoost,v2,0.5,0.8100,0.0000,0.0000,0.0000
-XGBoost,v2,0.4,0.8150,0.0909,0.0357,0.0513
-KNN,v2,0.5,0.4300,0.1161,0.4643,0.1857
-KNN,v2,0.4,0.3150,0.1241,0.6429,0.2081
