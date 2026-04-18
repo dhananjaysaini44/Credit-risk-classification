@@ -20,7 +20,7 @@ The platform is fully deployed and accessible in the cloud.
 
 ### Cloud URLs
 - **Backend API**: https://credit-risk-classification-fg0q.onrender.com
-- **Frontend Dashboard**: https://credit-risk-classification-q1ny-au967ssa1.vercel.app/
+- **Frontend Dashboard**: https://credit-risk-classification-q1ny-7h0d0rfu8.vercel.app/
 
 ### How to use the Live Platform
 1.  **Initiate Connection**: Click the Health Check link above.
