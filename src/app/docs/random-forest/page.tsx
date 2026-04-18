@@ -272,7 +272,7 @@ export default function RandomForestDoc() {
               <div>
                 <h3 className="text-white uppercase font-headline text-lg mb-2">Bootstrap Aggregation</h3>
                 <p className="text-foreground/50 text-xs leading-relaxed">
-                  Datasets are sampled with replacement to create 100 unique training subsets. This &apos;Bagging&apos; process ensures each tree develops unique feature interaction weights.
+                  Datasets are sampled with replacement to create 100 unique training subsets. This {"'Bagging'"} process ensures each tree develops unique feature interaction weights.
                 </p>
               </div>
             </div>

@@ -50,7 +50,7 @@ export default function LogisticRegressionDocs() {
           <div className="md:col-span-2 space-y-6">
             <h2 className="font-headline text-2xl text-white uppercase tracking-wider border-l-4 border-primary pl-4">Architecture Objective</h2>
             <p className="text-foreground/70 leading-relaxed">
-              In financial risk modeling, the cost of a **False Negative** (classifying a defaulter as safe) significantly outweighs the cost of a **False Positive**. Our Logistic Regression implementation is engineered specifically to serve as the platform&apos;s safety net, maximizing retrieval of high-risk candidates.
+              In financial risk modeling, the cost of a **False Negative** (classifying a defaulter as safe) significantly outweighs the cost of a **False Positive**. Our Logistic Regression implementation is engineered specifically to serve as the {"platform's"} safety net, maximizing retrieval of high-risk candidates.
             </p>
             <p className="text-foreground/70 leading-relaxed">
               We utilized a binary classification framework with a Sigmoid activation function, mapping a weighted sum of 16 feature-vectors to a probability space [0, 1].
@@ -117,7 +117,7 @@ export default function LogisticRegressionDocs() {
               </div>
             </div>
             <p className="text-foreground/60 text-sm italic border-l-2 border-primary/40 pl-4">
-              "By shifting the decision boundary to 0.35, we accept a higher false-alarm rate in exchange for a nearly 3x increase in critical risk detection capability."
+              &quot;By shifting the decision boundary to 0.35, we accept a higher false-alarm rate in exchange for a nearly 3x increase in critical risk detection capability.&quot;
             </p>
           </div>
         </section>
@@ -127,8 +127,8 @@ export default function LogisticRegressionDocs() {
           <h2 className="font-headline text-2xl text-white uppercase tracking-wider mb-10 border-l-4 border-secondary pl-4">Boundary Performance [0.35]</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <p className="text-foreground/70 leading-relaxed">
-                The confusion matrix below illustrates the model&apos;s behavior at the ground-truth 0.35 decision boundary. Realigned to match official validation charts, showing the high safety-net containment for risky profiles.
+              <p className="text-foreground/70 leading-relaxed md:text-lg">
+                The confusion matrix below illustrates the {"model's"} behavior at the ground-truth 0.35 decision boundary. Realigned to match official validation charts, showing the high safety-net containment for risky profiles.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-white/5 border border-white/20">
@@ -316,7 +316,7 @@ export default function LogisticRegressionDocs() {
               <div>
                 <h4 className="font-headline text-lg text-white mb-2 uppercase">Feature Normalization</h4>
                 <p className="text-foreground/60 leading-relaxed">
-                  Utilized `StandardScaler` to ensure coefficients remain scale-invariant. This prevents features like &apos;Annual Income&apos; from dominating the gradient updates over lower-magnitude features like &apos;Dependents&apos;.
+                  Utilized <code>StandardScaler</code> to ensure coefficients remain scale-invariant. This prevents features like {"'Annual Income'"} from dominating the gradient updates over lower-magnitude features like {"'Dependents'"}.
                 </p>
               </div>
             </div>
@@ -326,7 +326,7 @@ export default function LogisticRegressionDocs() {
               <div>
                 <h4 className="font-headline text-lg text-white mb-2 uppercase">L2 Regularization</h4>
                 <p className="text-foreground/60 leading-relaxed">
-                  Implemented a high penalty factor to handle multicollinearity among features such as &apos;Months Employed&apos; and &apos;Age&apos;, effectively shrinking redundant coefficients.
+                  Implemented a high penalty factor to handle multicollinearity among features such as {"'Months Employed'"} and {"'Age'"}, effectively shrinking redundant coefficients.
                 </p>
               </div>
             </div>
@@ -336,7 +336,7 @@ export default function LogisticRegressionDocs() {
               <div>
                 <h4 className="font-headline text-lg text-white mb-2 uppercase">Sigmoid Mapping</h4>
                 <p className="text-foreground/60 leading-relaxed">
-                  The model outputs a continuous probability density. The decision to flag a &apos;Default&apos; is determined by our calibrated 0.35 boundary, which marks the transition into a high-risk operational zone.
+                  The model outputs a continuous probability density. The decision to flag a {"'Default'"} is determined by our calibrated 0.35 boundary, which marks the transition into a high-risk operational zone.
                 </p>
               </div>
             </div>
