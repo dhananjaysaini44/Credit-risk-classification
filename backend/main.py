@@ -20,14 +20,23 @@ app.add_middleware(
 )
 
 class PredictionInput(BaseModel):
-  age: int
-  income: float
-  loanAmount: float
-  creditScore: int
-  employmentYears: int
-  educationLevel: str
-  housingStatus: str
-  modelType: str = "Logistic Regression"
+    age: int
+    income: float
+    loanAmount: float
+    creditScore: int
+    monthsEmployed: int
+    numCreditLines: int
+    interestRate: float
+    loanTerm: int
+    dtiRatio: float
+    education: str
+    employmentType: str
+    maritalStatus: str
+    hasMortgage: str
+    hasDependents: str
+    loanPurpose: str
+    hasCoSigner: str
+    modelType: str = "Logistic Regression"
 
 @app.get("/")
 async def root():
