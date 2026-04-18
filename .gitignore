@@ -7,21 +7,21 @@ __pycache__/
 data/
 
 # Model Weights (Allow ONLY production models to be committed)
-assets/models/*.pkl
-!assets/models/Logistic_Regression_v2.pkl
-!assets/models/Optimized_Random_Forest_v2.pkl
-!assets/models/XGBoost_v2.pkl
-!assets/models/KNN_v2.pkl
-!assets/models/preprocessor.pkl
+assets_1/models/*.pkl
+!assets_1/models/Logistic_Regression_v2.pkl
+!assets_1/models/Optimized_Random_Forest_v2.pkl
+!assets_1/models/XGBoost_v2.pkl
+!assets_1/models/KNN_v2.pkl
+!assets_1/models/preprocessor.pkl
 
 # Visualizations (Optional to ignore if you want to show them off, but we will keep them tracked for the README)
-# assets/eval/*.png 
+# assets_1/eval/*.png 
 
 # Un-tracked random media/video files in assets root
-/assets/*.mp4
-/assets/*.jpeg
-/assets/*.jpg
-/assets/*.zip
+/assets_1/*.mp4
+/assets_1/*.jpeg
+/assets_1/*.jpg
+/assets_1/*.zip
 
 # Virtual Environments
 venv/
@@ -72,4 +72,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 # Documentation & Notebooks
-notebooks/Project.ipynb
+notebooks_1/Project.ipynb
