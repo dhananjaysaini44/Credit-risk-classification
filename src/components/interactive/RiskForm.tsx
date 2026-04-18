@@ -123,9 +123,16 @@ export default function RiskForm() {
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'Unknown Error';
             console.error('Backend Connection Error:', err);
-            setError(errorMessage === 'Failed to fetch'
-                ? 'Predictive Engine Offline. Please start your FastAPI server (uvicorn backend.main:app).'
-                : errorMessage);
+
+            const isLocal = (process.env.NEXT_PUBLIC_API_URL || '').includes('localhost') || !process.env.NEXT_PUBLIC_API_URL;
+
+            if (errorMessage === 'Failed to fetch') {
+                setError(isLocal
+                    ? 'Predictive Engine Offline. Please ensure your local FastAPI server is running (uvicorn backend.main:app).'
+                    : 'Predictive Engine Offline. The Render backend may be waking up from sleep or experiencing high latency. Please retry in 30 seconds.');
+            } else {
+                setError(errorMessage);
+            }
         } finally {
             setLoading(false);
         }
