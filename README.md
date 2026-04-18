@@ -38,80 +38,53 @@ npm run dev:all
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
 
-## Project Structure
+## Project Architecture
 ```text
 Credit-risk Classification/
-├── assets/               # Analytics and Model Assets
-│   ├── models/           # Production-ready Binary Artifacts (.pkl)
-│   │   ├── KNN_v2.pkl
-│   │   ├── Logistic_Regression_v2.pkl
-│   │   ├── Optimized_Random_Forest_v2.pkl
-│   │   ├── XGBoost_v2.pkl
-│   │   └── preprocessor.pkl
-│   ├── eda/              # Exploratory Analysis (Correlation, Overlap)
-│   └── eval/             # Performance (metrics_log.csv, Confusion Matrices)
-├── backend/              # Optimized Prediction Engine (FastAPI)
-│   ├── main.py           # API Entrypoint with dynamic Port/Host binding
-│   └── utils.py          # Real-time Multi-Model Risk Engine class
-├── public/               # Static Media Assets
-│   ├── assets/           # UI textures (exosphere, stars)
-│   └── frames/           # Cinematic Sequence (frame-001.jpg to frame-240.jpg)
-├── src/                  # Next.js 15 Cinematic Frontend
-│   ├── app/              # App Router and Global Styles
-│   │   ├── layout.tsx    # Root layout with Smooth Scroll integration
-│   │   └── page.tsx      # Multi-model Landing Dashboard
-│   ├── components/       # Modular UI Components
-│   │   ├── cinematic/    # CustomCursor, Hero, ScrollSequence, StorySection
-│   │   └── interactive/  # RiskForm, ResultsDisplay (High-precision)
-│   └── store/            # State Management (Zustand: useRiskStore)
-├── notebooks/            # Research & Model Development
-├── requirements.txt      # Inference-optimized Backend Dependencies
-├── .gitignore            # Deployment exclusion rules (Python/Node/OS)
-├── render.yaml           # Blueprint for Render Backend Deployment
-├── package.json          # Frontend scripts and unified dev commands
-├── start.ps1             # All-in-one Windows Dev Startup
+├── assets_1/                    # Dataset 1: Behavioral Analytics (32k Samples)
+│   ├── models/                  # Models based on Dataset 1
+│   ├── eda/                     # Distribution Plots & Correlation Heatmaps
+│   └── eval/                    # Threshold-Specific Confusion Matrices
+├── assets_2/                    # Dataset 2: Market-Scale Data (255k Samples)
+│   ├── models/                  # Optimized Heavy-Duty ML Models
+│   │   ├── KNN.pkl
+│   │   ├── Logistic_Regression.pkl
+│   │   ├── Random_Forest.pkl
+│   │   ├── XGBoost.pkl
+│   │   ├── preprocessor.pkl
+│   ├── eval/                    # Threshold-Specific Confusion Matrices
+│   └── eda/                     # Precision-Recall Optimization Curves
+├── backend/                     # Inference Layer (FastAPI)
+│   ├── main.py                  # API endpoints with Pydantic Schema Validation
+│   └── utils.py                 # High-Concurrency Predictor Implementation
+├── data/                        # Data Repository (Git Ignored)
+│   ├── Loan_default.csv         # Raw Market Instance Data
+│   ├── Loan_default_simulated.csv# Real-World Behavioral Simulation
+│   └── credit_risk_dataset.csv  # Base Research Dataset
+├── docs/                        # Technical Knowledge Base
+│   ├── ML_Pipeline.md           # Engineering, Resampling, & SMOTE Logic
+│   └── Frontend.md              # Cinematic UI & WebGL Sequence Specs
+├── notebooks_1/                 # Research Kernels (Dataset 1)
+├── notebooks_2/                 # Research Kernels (Dataset 2)
+├── public/                      # Static Media & 4K Frame Sequences
+│   ├── assets/                  # UI Textures (Exosphere, Particles)
+│   └── frames/                  # High-Fiddle Cinematic Sequence Frames
+├── src/                         # Next.js 15 Cinematic Frontend
+│   ├── app/                     # App Router, Layouts, & Global Glassmorphism
+│   ├── components/              # Modular UI (GSAP/Three.js/Interactive)
+│   └── store/                   # Zustand-based Global State Management
+├── requirements.txt             # Backend ML Dependencies (NumPy, SciPy, etc.)
+├── package.json                 # Web Development Scripts & NPM Packages
+├── start.ps1                    # Windows-native Dev Environment Bootstrapper
+├── .gitignore                   # Git Ignore File
+└── render.yaml                  # Render Configuration File
 ```
 
-## Implementation Research & ML Methodology
+## Documentation & Methodology
+For a detailed breakdown of our technical approach, model selection, and frontend architecture, please refer to the dedicated documentation:
 
-### Optimal Threshold Selection
-Our mathematical analysis concludes that the **Default (0.50)** probability threshold is suboptimal for this specific credit risk profile. 
+*   **[Machine Learning Pipeline (Methodology, Thresholds, & Evaluation)](docs/ML_Pipeline.md)**
+*   **[Frontend Architecture (Cinematic UI & Component Specs)](docs/Frontend.md)**
 
-By analyzing the Precision-Recall trade-off, we identified an **Optimal Threshold of 0.40**, which maximizes the **F1-Score (0.30)** while maintaining an aggressive catch-rate for defaults.
-
-![F1 Optimization Curve](assets/eval/f1_optimization.png)
-![Logistic Regression v2 Confusion Matrix](assets/eval/Logistic_Regression_v2_cm_0.4.png)
-
-| Factor                  | Baseline (0.50) | Optimized (0.40) | Impact                           |
-| :---------------------- | :-------------- | :--------------- | :------------------------------- |
-| **Recall (Catch Rate)** | 54%             | **93%**          | **+39%** increase in protection. |
-| **F1-Score**            | 0.23            | **0.30**         | Maximum mathematical balance.    |
-
-> [!TIP]
-> **Conclusion**: For real-world deployment, setting the detection threshold to **0.40** provides the best survival rate for the bank by catching nearly every default before it happens, without significantly increasing the false alarm rate.
-
-### Data Processing Strategy
-To ensure our model learns real-world patterns reliably without data leakage, we enforce strict data hygiene:
-- **Train-Test Split First**: The raw data is strictly split 80/20 before any statistics are calculated.
-- **Scikit-Learn Pipelines**:
-  - **SimpleImputer**: Used exclusively to handle missing values based only on the training data mean.
-  - **StandardScaler**: Applied to all numeric features.
-  - **OrdinalEncoder**: Explicitly orders Education_Level stability.
-  - **OneHotEncoder**: Converts categorical variables into binary features.
-
-### Feature Engineering
-#### Loan to Income Ratio
-Instead of having the algorithm guess the burden of a loan, we explicitly calculate the exact ratio of the requested Loan_Amount against income. This is functionally one of the most powerful predictors of default risk.
-
-#### Advanced Interaction Engineering
-We introduced synthetic interaction terms to create a stronger mathematical separation between classes:
-- **Risk Index**: (Loan_Amount / Income) / Credit_Score.
-- **Stability Index**: Credit_Score * Employment_Years.
-
-### Model Training and Optimization
-#### Addressing Class Imbalance with SMOTE
-We utilized Synthetic Minority Over-sampling Technique (SMOTE) to synthesize new, mathematically plausible minority examples using a K-Nearest Neighbors approach.
-
-#### Gradient Boosting and Hyperparameter Tuning
-We deployed XGBoost (eXtreme Gradient Boosting) to handle high variance. Missing a default is significantly more expensive than accidentally rejecting a safe customer.
+--- 
 
