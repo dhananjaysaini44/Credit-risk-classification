@@ -220,7 +220,7 @@ export default function KNNDoc() {
                 The Curse of Dimensionality
               </h4>
               <p className="text-foreground/50 text-xs leading-relaxed">
-                As feature dimensions increase, the data becomes sparse, making distance-based classification difficult. We've optimized the dimensionality through <span className="text-white">Recursive Feature Selection</span>, maintaining only the most discriminative vectors for geometric stability.
+                As feature dimensions increase, the data becomes sparse, making distance-based classification difficult. We&apos;ve optimized the dimensionality through <span className="text-white">Recursive Feature Selection</span>, maintaining only the most discriminative vectors for geometric stability.
               </p>
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function KNNDoc() {
               <div>
                 <h3 className="text-white uppercase font-headline text-lg mb-2">Global Feature Normalization</h3>
                 <p className="text-foreground/50 text-xs leading-relaxed">
-                  To prevent high-magnitude features like 'Total Income' from overwhelming the distance calculation, all vectors undergo <span className="text-white">Min-Max Scaling</span>. This maps all variables to a uniform [0,1] range, ensuring geometric equilibrium during neighbor search.
+                  To prevent high-magnitude features like &apos;Total Income&apos; from overwhelming the distance calculation, all vectors undergo <span className="text-white">Min-Max Scaling</span>. This maps all variables to a uniform [0,1] range, ensuring geometric equilibrium during neighbor search.
                 </p>
               </div>
             </div>

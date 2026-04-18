@@ -219,7 +219,7 @@ export default function GradientBoostingDoc() {
                 Sparsity-Aware Splitting
               </h4>
               <p className="text-foreground/50 text-xs leading-relaxed">
-                The ARCH-XGB engine employs a unified algorithm for handling sparse data. When a feature value is missing, the model automatically learns a 'default direction' for the split, ensuring robustness even with incomplete credit histories.
+                The ARCH-XGB engine employs a unified algorithm for handling sparse data. When a feature value is missing, the model automatically learns a &apos;default direction&apos; for the split, ensuring robustness even with incomplete credit histories.
               </p>
             </div>
           </div>
@@ -286,7 +286,7 @@ export default function GradientBoostingDoc() {
               <div>
                 <h3 className="text-white uppercase font-headline text-lg mb-2">Shrinkage & Column Subsampling</h3>
                 <p className="text-foreground/50 text-xs leading-relaxed">
-                  To prevent overfitting in sparse credit data, XGBoost implements 'Shrinkage' (Eta) which scales weights by a factor after each step of tree boosting. This, combined with column subsampling, ensures that no single feature dominates the ensemble's decision logic.
+                  To prevent overfitting in sparse credit data, XGBoost implements &apos;Shrinkage&apos; (Eta) which scales weights by a factor after each step of tree boosting. This, combined with column subsampling, ensures that no single feature dominates the ensemble&apos;s decision logic.
                 </p>
               </div>
             </div>
