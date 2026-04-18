@@ -6,7 +6,7 @@ __pycache__/
 # Data (Never commit large raw data or sensitive user data to GitHub)
 data/
 
-# Model Assets (Selective Analytics & Model Tracking)
+# Model Assets (Managed tracking via whitelist)
 assets_1/**
 assets_2/**
 
@@ -14,20 +14,19 @@ assets_2/**
 !assets_1/**/
 !assets_2/**/
 
-# Whitelist: Documentation Dependencies (ML_Pipeline.md)
+# Whitelist: Documentation Dependencies (Used in ML_Pipeline.md)
 !assets_1/eda/correlation_matrix.png
 !assets_2/eda/correlation_matrix.png
 !assets_2/eval/model_performance_comparison.png
 !assets_2/eval/f1_optimization.png
 !assets_2/eval/Logistic_Regression_cm_0.35.png
 
-# Whitelist: Production Models (Secondary Dataset Architecture)
+# Whitelist: Production Models (Primary Dataset Architecture)
 !assets_2/models/
-!assets_2/models/Logistic_Regression.pkl
-!assets_2/models/Random_Forest.pkl
-!assets_2/models/XGBoost.pkl
-!assets_2/models/KNN.pkl
-!assets_2/models/preprocessor.pkl
+!assets_2/models/*.pkl
+
+# Ensure .gitkeep files are never ignored
+!**/.gitkeep
 
 # Virtual Environments
 venv/
