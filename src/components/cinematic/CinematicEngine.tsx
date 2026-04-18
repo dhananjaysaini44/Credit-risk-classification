@@ -78,7 +78,7 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
     let animationId: number;
     const render = () => {
       // Lerp for smoothness
-      const lerpFactor = isMobile.current ? 0.05 : 0.1;
+      const lerpFactor = isMobile.current ? 0.08 : 0.15;
       currentFrame.current += (targetFrame.current - currentFrame.current) * lerpFactor;
       
       const frameIndex = Math.round(currentFrame.current);
@@ -147,7 +147,7 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
         trigger: 'body',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1, // Adds a weighted, premium follow effect
+        scrub: 0.5, // Reduced from 1 to make it feel lighter/faster
         onUpdate: (self) => {
           targetFrame.current = self.progress * (frameCount - 1);
         },

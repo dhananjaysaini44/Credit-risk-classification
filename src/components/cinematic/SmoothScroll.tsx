@@ -16,7 +16,14 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
   const overlayOpacity = useTransform(scrollY, [0, 600], [1, 0.4]); 
 
   return (
-    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+    <ReactLenis root options={{ 
+      lerp: 0.15, 
+      duration: 1.2, 
+      smoothWheel: true,
+      wheelMultiplier: 1.1,
+      touchMultiplier: 2,
+      infinite: false
+    }}>
       {/* Managed Parallax Background */}
       <div className="fixed inset-0 z-[-1] bg-[#000000] overflow-hidden">
         <div className="absolute inset-0">

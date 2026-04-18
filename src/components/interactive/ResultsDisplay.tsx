@@ -48,13 +48,13 @@ export default function ResultsDisplay({ onReset }: ResultsDisplayProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="glass-panel p-8 md:p-12 relative overflow-hidden group"
+      className="glass-panel p-5 md:p-12 relative overflow-hidden group"
     >
       <div className="absolute top-0 right-0 p-4">
         <div className={`h-2 w-2 rounded-full ${isHighRisk ? 'bg-secondary' : 'bg-primary'} animate-pulse`} />
       </div>
       <div className="flex flex-col items-center text-center space-y-6 mb-12 relative z-10">
-        <h3 className={`font-headline text-3xl md:text-5xl font-bold tracking-tightest ${statusColor}`}>
+        <h3 className={`font-headline text-2xl md:text-5xl font-bold tracking-tightest ${statusColor}`}>
           {label}
         </h3>
         <p className="font-body text-foreground/60 max-w-md mx-auto text-sm leading-relaxed">
@@ -98,50 +98,86 @@ export default function ResultsDisplay({ onReset }: ResultsDisplayProps) {
         </button>
       </div>
 
-      {/* Parameter Telemetry Summary */}
+          {/* Parameter Telemetry Summary */}
       <div className="relative z-10 bg-muted/5 border border-white/5 p-4 md:p-6 rounded-sm">
         <h4 className="font-headline text-[11px] md:text-[13px] uppercase tracking-[0.3em] text-foreground/40 mb-5 pb-2 border-b border-white/5">Analyzed Profile Telemetry</h4>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-4 md:gap-x-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-4 gap-x-3 md:gap-x-8">
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Age</p>
-            <p className="text-[16px] font-mono text-white">{data.age}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">01 // Age</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.age} YRS</p>
           </div>
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Income</p>
-            <p className="text-[16px] font-mono text-white">₹{data.income.toLocaleString()}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">02 // Annual Income</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">₹{data.income.toLocaleString()}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Loan Amount</p>
-            <p className="text-[16px] font-mono text-white">₹{data.loanAmount.toLocaleString()}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">03 // Loan Amount</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">₹{data.loanAmount.toLocaleString()}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Credit Score</p>
-            <p className="text-[16px] font-mono text-white">{data.creditScore}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">04 // Credit Score</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.creditScore}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Emp. Years</p>
-            <p className="text-[16px] font-mono text-white">{data.employmentYears}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">05 // Months Employed</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.monthsEmployed}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Housing</p>
-            <p className="text-[16px] font-mono text-white">{data.housingStatus}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">06 // Credit Lines</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.numCreditLines}</p>
           </div>
           <div className="space-y-1">
-            <p className="text-[13px] text-white/20 uppercase font-mono">Education</p>
-            <p className="text-[16px] font-mono text-white">{data.educationLevel}</p>
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">07 // Interest Rate</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.interestRate}%</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">08 // Loan Term</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.loanTerm} MO</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">09 // DTI Ratio</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.dtiRatio}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">10 // Education</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white truncate">{data.education}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">11 // Employment</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white truncate">{data.employmentType}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">12 // Marital Status</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white truncate">{data.maritalStatus}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">13 // Mortgage</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.hasMortgage}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">14 // Dependents</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.hasDependents}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">15 // Loan Purpose</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white truncate">{data.loanPurpose}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-[9px] md:text-[10px] text-white/20 uppercase font-mono tracking-wider">16 // Co-Signer</p>
+            <p className="text-[13px] md:text-[15px] font-mono text-white">{data.hasCoSigner}</p>
           </div>
         </div>
       </div>
 
       <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
         <div className="flex flex-wrap gap-4">
-          <div className="text-[12px] font-mono text-primary/40 uppercase bg-primary/5 px-3 py-1.5 border border-primary/10">THRESHOLD: 0.40</div>
+          <div className="text-[12px] font-mono text-primary/40 uppercase bg-primary/5 px-3 py-1.5 border border-primary/10">THRESHOLD: 0.35</div>
           <div className="text-[12px] font-mono text-secondary/40 uppercase bg-secondary/5 px-3 py-1.5 border border-secondary/10">
             MODEL: {
-              selectedModel === 'Logistic Regression' ? 'LOG_REG_V2' :
-              selectedModel === 'Random Forest' ? 'RF_OPT_V2' :
-              selectedModel === 'XGBoost' ? 'XGB_V2' :
-              selectedModel === 'KNN' ? 'KNC_V2' : selectedModel
+              selectedModel === 'Logistic Regression' ? 'LOG_REG_V3' :
+              selectedModel === 'Random Forest' ? 'RF_OPT_V3' :
+              selectedModel === 'XGBoost' ? 'XGB_V3' :
+              selectedModel === 'KNN' ? 'KNC_V3' : selectedModel
             }
           </div>
           <div className="text-[12px] font-mono text-primary/40 uppercase bg-primary/5 px-3 py-1.5 border border-primary/10">STABILITY: NOMINAL</div>

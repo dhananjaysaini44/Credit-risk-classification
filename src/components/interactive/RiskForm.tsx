@@ -5,30 +5,96 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ResultsDisplay from './ResultsDisplay';
 import { useRiskStore } from '@/store/useRiskStore';
 
+const SelectionGroup = ({ label, name, options, current, onToggle }: { label: string, name: string, options: string[], current: string, onToggle: (name: string, opt: string) => void }) => (
+    <div className="relative group/field">
+        <label className="block font-headline text-[13px] uppercase tracking-[0.3m] text-primary/60 mb-3 group-focus-within/field:text-primary transition-colors">
+            {label}
+        </label>
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
+            {options.map((opt) => (
+                <button
+                    key={opt}
+                    type="button"
+                    onClick={() => onToggle(name, opt)}
+                    className={`py-3 px-2 border font-mono text-[9px] uppercase tracking-widest transition-all duration-500 relative overflow-hidden flex-1 ${current === opt
+                        ? 'bg-primary text-black border-primary shadow-[0_0_20px_rgba(195,245,255,0.3)]'
+                        : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
+                        }`}
+                >
+                    <span className="relative z-10">{opt}</span>
+                    {current === opt && (
+                        <motion.div
+                            layoutId={`active-indicator-${name}`}
+                            className="absolute inset-0 bg-primary/20 pointer-events-none"
+                            initial={false}
+                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                    )}
+                </button>
+            ))}
+        </div>
+    </div>
+);
+
+const InputField = ({ label, name, value, onChange, type = "number", max, min }: { label: string, name: string, value: string | number, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, type?: string, max?: string, min?: string }) => (
+    <div className="relative group/field">
+        <label className="block font-headline text-[13px] uppercase tracking-[0.3m] text-primary/60 mb-1 group-focus-within/field:text-primary transition-colors">
+            {label}
+        </label>
+        <input
+            type={type}
+            name={name}
+            value={value}
+            max={max}
+            min={min}
+            step={type === "number" ? "any" : undefined}
+            onChange={onChange}
+            className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[18px]"
+        />
+        <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+    </div>
+);
+
 export default function RiskForm() {
     const { updateData, setPrediction, setError, error, isLoading, setLoading, selectedModel, setSelectedModel } = useRiskStore();
     const [formData, setFormData] = useState({
-        age: 30,
-        income: 50000,
-        loanAmount: 10000,
-        creditScore: 700,
-        employmentYears: 5,
-        educationLevel: 'Bachelors',
-        housingStatus: 'Rent',
+        age: 35,
+        income: 75000,
+        loanAmount: 25000,
+        creditScore: 680,
+        monthsEmployed: 48,
+        numCreditLines: 4,
+        interestRate: 12.5,
+        loanTerm: 36,
+        dtiRatio: 0.25,
+        education: "Bachelor's",
+        employmentType: 'Full-time',
+        maritalStatus: 'Married',
+        hasMortgage: 'Yes',
+        hasDependents: 'No',
+        loanPurpose: 'Home',
+        hasCoSigner: 'No',
     });
 
     const [showResults, setShowResults] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        const val = e.target.type === 'number' ? parseFloat(value) : value;
+        // Keep as string while typing to avoid losing 0 after decimal or empty strings
         setFormData(prev => ({
             ...prev,
-            [name]: val,
+            [name]: value,
         }));
 
         // Sync with store immediately for telemetry
-        updateData({ [name]: val });
+        // Wait, store might expect numbers? Let's check store type.
+        // For now, keep it simple.
+        updateData({ [name]: e.target.type === 'number' ? parseFloat(value) || 0 : value });
+    };
+
+    const toggleField = (name: string, value: string) => {
+        setFormData(prev => ({ ...prev, [name]: value }));
+        updateData({ [name]: value });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -65,17 +131,18 @@ export default function RiskForm() {
         }
     };
 
+
     return (
-        <div className="max-w-4xl mx-auto px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 relative z-10">
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-center mb-16"
+                className="text-center mb-12 px-4"
             >
-                <h2 className="font-headline text-4xl text-white mb-4 tracking-tight">Try it Yourself</h2>
-                <p className="font-body text-foreground/50 text-sm uppercase tracking-widest">
-                    Submit raw parameters for risk margin classification
+                <h2 className="font-headline text-3xl md:text-4xl text-white mb-4 tracking-tight">Try it Yourself</h2>
+                <p className="font-body text-foreground/50 text-xs uppercase tracking-widest">
+                    Submit a 16-point feature matrix for high-fidelity risk classification
                 </p>
             </motion.div>
 
@@ -83,12 +150,12 @@ export default function RiskForm() {
                 {!showResults ? (
                     <motion.div
                         key="form"
-                        initial={{ opacity: 0, scale: 0.98 }}
+                        initial={{ opacity: 0, scale: 0.99 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        className="glass-panel p-8 md:p-12 relative overflow-hidden group"
+                        exit={{ opacity: 0, scale: 0.99 }}
+                        className="glass-panel p-5 md:p-10 relative overflow-hidden"
                     >
-                        <div className="scanline opacity-10 pointer-events-none" />
+                        <div className="scanline opacity-5 pointer-events-none" />
 
                         {error && (
                             <motion.div
@@ -101,150 +168,43 @@ export default function RiskForm() {
                             </motion.div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 relative z-10">
+                        <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
 
-                            {/* Age */}
-                            <div className="relative group/field">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Age
-                                </label>
-                                <input
-                                    type="number"
-                                    name="age"
-                                    value={formData.age}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
-                                />
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
+                            {/* Section 1: Financial & Core */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <InputField label="Annual Income" name="income" value={formData.income} onChange={handleChange} />
+                                <InputField label="Loan Amount" name="loanAmount" value={formData.loanAmount} onChange={handleChange} />
+                                <InputField label="Credit Score" name="creditScore" value={formData.creditScore} onChange={handleChange} />
+                                <InputField label="DTI Ratio" name="dtiRatio" value={formData.dtiRatio} onChange={handleChange} />
+                                <InputField label="Interest Rate (%)" name="interestRate" value={formData.interestRate} onChange={handleChange} />
+                                <InputField label="Loan Term (Months)" name="loanTerm" value={formData.loanTerm} onChange={handleChange} />
                             </div>
 
-                            {/* Income */}
-                            <div className="relative group/field">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Annual Income (INR)
-                                </label>
-                                <input
-                                    type="number"
-                                    name="income"
-                                    max="500000"
-                                    min="0"
-                                    value={formData.income}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
-                                />
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
-                                <span className="absolute right-0 -bottom-6 text-[10px] font-mono text-white/30 uppercase tracking-widest">max: 500000</span>
+                            {/* Section 2: Personal & History */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <InputField label="Age" name="age" value={formData.age} onChange={handleChange} />
+                                <InputField label="Months Employed" name="monthsEmployed" value={formData.monthsEmployed} onChange={handleChange} />
+                                <InputField label="Active Credit Lines" name="numCreditLines" value={formData.numCreditLines} onChange={handleChange} />
+
+                                <SelectionGroup label="Education" name="education" current={formData.education} options={['High School', "Bachelor's", 'Master\'s', 'PhD']} onToggle={toggleField} />
+                                <SelectionGroup label="Employment" name="employmentType" current={formData.employmentType} options={['Full-time', 'Part-time', 'Self-employed', 'Un-employed']} onToggle={toggleField} />
+                                <SelectionGroup label="Marital Status" name="maritalStatus" current={formData.maritalStatus} options={['Single', 'Married', 'Divorced']} onToggle={toggleField} />
                             </div>
 
-                            {/* Loan Amount */}
-                            <div className="relative group/field">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Loan Amount (INR)
-                                </label>
-                                <input
-                                    type="number"
-                                    name="loanAmount"
-                                    max="500000"
-                                    min="0"
-                                    value={formData.loanAmount}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
-                                />
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
-                                <span className="absolute right-0 -bottom-6 text-[10px] font-mono text-white/30 uppercase tracking-widest">max: 500000</span>
-                            </div>
-
-                            {/* Credit Score */}
-                            <div className="relative group/field">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Credit Score
-                                </label>
-                                <input
-                                    type="number"
-                                    name="creditScore"
-                                    value={formData.creditScore}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
-                                />
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
-                                <span className="absolute right-0 -bottom-6 text-[10px] font-mono text-white/30 uppercase tracking-widest">max: 850</span>
-                            </div>
-
-                            {/* Employment Length */}
-                            <div className="relative group/field">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Employment Years
-                                </label>
-                                <input
-                                    type="number"
-                                    name="employmentYears"
-                                    value={formData.employmentYears}
-                                    onChange={handleChange}
-                                    className="w-full bg-transparent border-0 border-b border-white/10 focus:border-primary focus:ring-0 transition-all text-white py-2 font-mono text-[22px]"
-                                />
-                                <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-primary group-focus-within/field:w-full transition-all duration-700" />
-                            </div>
-
-                            {/* Housing Status */}
-                            <div className="relative group/field md:col-span-2 lg:col-span-1">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Housing Status
-                                </label>
-                                <div className="flex flex-wrap gap-2">
-                                    {['Own', 'Mortgage', 'Rent'].map((status) => (
-                                        <button
-                                            key={status}
-                                            type="button"
-                                            onClick={() => {
-                                                setFormData(prev => ({ ...prev, housingStatus: status }));
-                                                updateData({ housingStatus: status });
-                                            }}
-                                            className={`flex-1 min-w-[80px] py-4 px-2 border font-mono text-[11px] uppercase tracking-widest transition-all duration-500 relative overflow-hidden group/opt ${formData.housingStatus === status
-                                                ? 'bg-primary text-black shadow-[0_0_20px_rgba(195,245,255,0.3)] border-primary'
-                                                : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
-                                                }`}
-                                        >
-                                            {status}
-                                            {formData.housingStatus === status && (
-                                                <motion.div layoutId="housing-active" className="absolute bottom-0 left-0 h-[2px] w-full bg-primary" />
-                                            )}
-                                        </button>
-                                    ))}
+                            {/* Section 3: Contextual Flags */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <SelectionGroup label="Has Mortgage" name="hasMortgage" current={formData.hasMortgage} options={['Yes', 'No']} onToggle={toggleField} />
+                                <SelectionGroup label="Has Dependents" name="hasDependents" current={formData.hasDependents} options={['Yes', 'No']} onToggle={toggleField} />
+                                <SelectionGroup label="Has Co-Signer" name="hasCoSigner" current={formData.hasCoSigner} options={['Yes', 'No']} onToggle={toggleField} />
+                                <div className="md:col-span-3">
+                                    <SelectionGroup label="Loan Purpose" name="loanPurpose" current={formData.loanPurpose} options={['Auto', 'Business', 'Education', 'Home', 'Other']} onToggle={toggleField} />
                                 </div>
                             </div>
 
-                            {/* Education Level */}
-                            <div className="relative group/field md:col-span-2">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Education Level
-                                </label>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                    {['High School', 'Bachelors', 'Masters', 'PhD'].map((level) => (
-                                        <button
-                                            key={level}
-                                            type="button"
-                                            onClick={() => {
-                                                setFormData(prev => ({ ...prev, educationLevel: level }));
-                                                updateData({ educationLevel: level });
-                                            }}
-                                            className={`py-4 px-1 border font-mono text-[10px] uppercase tracking-widest transition-all duration-500 relative ${formData.educationLevel === level
-                                                ? 'bg-primary text-black shadow-[0_0_20px_rgba(195,245,255,0.3)] border-primary'
-                                                : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
-                                                }`}
-                                        >
-                                            {level}
-                                            {formData.educationLevel === level && (
-                                                <motion.div layoutId="edu-active" className="absolute bottom-0 left-0 h-[2px] w-full bg-primary" />
-                                            )}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Predictive Model Dropdown */}
-                            <div className="relative group/field md:col-span-2">
-                                <label className="block font-headline text-[14px] uppercase tracking-[0.3em] text-primary/60 mb-2 group-focus-within/field:text-primary transition-colors">
-                                    Classifier Model Engine
+                            {/* Section 4: Engine Selection */}
+                            <div className="relative group/field pt-8 border-t border-white/5">
+                                <label className="block font-headline text-[13px] uppercase tracking-[0.3em] text-primary/60 mb-4 group-focus-within/field:text-primary transition-colors">
+                                    Inference Engine
                                 </label>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                                     {['Logistic Regression', 'Random Forest', 'XGBoost', 'KNN'].map((model) => (
@@ -252,14 +212,12 @@ export default function RiskForm() {
                                             key={model}
                                             type="button"
                                             onClick={() => setSelectedModel(model)}
-                                            className={`py-5 px-2 border font-mono text-[10px] uppercase tracking-widest transition-all duration-500 relative ${selectedModel === model
+                                            className={`py-4 px-2 border font-mono text-[9px] uppercase tracking-widest transition-all duration-500 relative ${selectedModel === model
                                                 ? 'bg-primary text-black shadow-[0_0_20px_rgba(195,245,255,0.3)] border-primary'
                                                 : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'
                                                 }`}
                                         >
-                                            {model === 'Logistic Regression' ? 'LOGISTIC REGRESSION' :
-                                                model === 'Random Forest' ? 'RANDOM FOREST' :
-                                                    model === 'XGBoost' ? 'XGBOOST' : 'K-NEAREST NEIGHBOR'}
+                                            {model.toUpperCase()}
                                             {selectedModel === model && (
                                                 <motion.div layoutId="model-active" className="absolute bottom-0 left-0 h-[2px] w-full bg-primary" />
                                             )}
@@ -268,14 +226,14 @@ export default function RiskForm() {
                                 </div>
                             </div>
 
-                            <div className="md:col-span-2 pt-10">
+                            <div className="pt-6">
                                 <button
                                     type="submit"
                                     disabled={isLoading}
                                     className="w-full bg-primary py-5 text-[#0a0c10] font-headline uppercase tracking-[0.4em] font-bold text-[16px] hover:bg-primary/90 transition-all duration-500 flex items-center justify-center gap-4 group/btn relative overflow-hidden"
                                 >
                                     <span className={isLoading ? 'opacity-0' : 'opacity-100 flex items-center gap-4'}>
-                                        Submit for Classification
+                                        Run Risk Assessment
                                     </span>
                                     {isLoading && (
                                         <div className="absolute inset-0 flex items-center justify-center">

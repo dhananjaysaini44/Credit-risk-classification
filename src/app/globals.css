@@ -29,7 +29,7 @@
   }
   body {
     @apply bg-background text-foreground font-sans relative overflow-x-hidden;
-    cursor: crosshair;
+    cursor: auto;
   }
 }
 

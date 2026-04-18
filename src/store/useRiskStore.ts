@@ -10,9 +10,18 @@ interface RiskState {
     income: number;
     loanAmount: number;
     creditScore: number;
-    employmentYears: number;
-    educationLevel: string;
-    housingStatus: string;
+    monthsEmployed: number;
+    numCreditLines: number;
+    interestRate: number;
+    loanTerm: number;
+    dtiRatio: number;
+    education: string;
+    employmentType: string;
+    maritalStatus: string;
+    hasMortgage: string;
+    hasDependents: string;
+    loanPurpose: string;
+    hasCoSigner: string;
   };
   loadProgress: number;
   selectedModel: string;
@@ -32,13 +41,22 @@ export const useRiskStore = create<RiskState>((set) => ({
   isLoading: false,
   error: null,
   data: {
-    age: 30,
-    income: 50000,
-    loanAmount: 10000,
-    creditScore: 700,
-    employmentYears: 5,
-    educationLevel: 'Bachelors',
-    housingStatus: 'Rent',
+    age: 35,
+    income: 75000,
+    loanAmount: 25000,
+    creditScore: 680,
+    monthsEmployed: 48,
+    numCreditLines: 4,
+    interestRate: 12.5,
+    loanTerm: 36,
+    dtiRatio: 0.25,
+    education: "Bachelor's",
+    employmentType: 'Full-time',
+    maritalStatus: 'Married',
+    hasMortgage: 'Yes',
+    hasDependents: 'No',
+    loanPurpose: 'Home',
+    hasCoSigner: 'No',
   },
   setLoadProgress: (progress) => set({ loadProgress: progress }),
   setSelectedModel: (model) => set({ selectedModel: model }),

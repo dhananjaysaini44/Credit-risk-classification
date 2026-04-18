@@ -46,7 +46,7 @@ export default function CustomCursor() {
         opacity: isVisible ? 1 : 0,
         scale: isVisible ? 1 : 0 
       }}
-      className="fixed z-[9999] pointer-events-none"
+      className="fixed z-[9999] pointer-events-none hidden lg:block"
     >
       <div className="relative flex items-center justify-center">
         {/* Core Dot */}
