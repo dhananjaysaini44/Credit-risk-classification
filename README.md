@@ -31,9 +31,11 @@ The platform is fully deployed and accessible in the cloud.
 You can start both the Next.js frontend and FastAPI backend with a single command:
 ```bash
 # Recommended for all platforms
+cd apps/web
 npm run dev:all
 
 # Windows Native Alternative
+cd apps/ml-backend
 .\start.ps1
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
@@ -41,42 +43,24 @@ Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
 ## Project Architecture
 ```text
 Credit-risk Classification/
-├── assets_1/                       # Dataset 1: Behavioral Analytics (32k Samples)
-│   ├── models/                     # Models based on Dataset 1
-│   ├── eda/                        # Distribution Plots & Correlation Heatmaps
-│   └── eval/                       # Threshold-Specific Confusion Matrices
-├── assets_2/                       # Dataset 2: Market-Scale Data (255k Samples)
-│   ├── models/                     # Optimized Heavy-Duty ML Models
-│   │   ├── KNN.pkl
-│   │   ├── Logistic_Regression.pkl
-│   │   ├── Random_Forest.pkl
-│   │   ├── XGBoost.pkl
-│   │   ├── preprocessor.pkl
-│   ├── eval/                       # Threshold-Specific Confusion Matrices
-│   └── eda/                        # Precision-Recall Optimization Curves
-├── backend/                        # Inference Layer (FastAPI)
-│   ├── main.py                     # API endpoints with Pydantic Schema Validation
-│   └── utils.py                    # High-Concurrency Predictor Implementation
-├── data/                           # Data Repository (Git Ignored)
-│   ├── Loan_default.csv            # Raw Market Instance Data
-│   ├── Loan_default_simulated.csv  # Real-World Behavioral Simulation
-│   └── credit_risk_dataset.csv     # Base Research Dataset
-├── docs/                           # Technical Knowledge Base
-│   ├── ML_Pipeline.md              # Engineering, Resampling, & SMOTE Logic
-│   └── Frontend.md                 # Cinematic UI & WebGL Sequence Specs
-├── notebooks_1/                    # Research Kernels (Dataset 1)
-├── notebooks_2/                    # Research Kernels (Dataset 2)
-├── public/                         # Static Media & 4K Frame Sequences
-│   ├── assets/                     # UI Textures (Exosphere, Particles)
-│   └── frames/                     # High-Fiddle Cinematic Sequence Frames
-├── src/                            # Next.js 15 Cinematic Frontend
-│   ├── app/                        # App Router, Layouts, & Global Glassmorphism
-│   ├── components/                 # Modular UI (GSAP/Three.js/Interactive)
-│   └── store/                      # Zustand-based Global State Management
-├── requirements.txt                # Backend ML Dependencies (NumPy, SciPy, etc.)
-├── package.json                    # Web Development Scripts & NPM Packages
-├── start.ps1                       # Windows-native Dev Environment Bootstrapper
+├── apps/
+│   ├── web/                        # Next.js 15 Cinematic Frontend
+│   │   ├── public/                 # Static Media & 4K Frame Sequences
+│   │   ├── src/                    # App Router, Components, & Zustand Store
+│   │   └── package.json            # Web Development Scripts & NPM Packages
+│   ├── ml-backend/                 # Python FastAPI & ML Pipeline
+│   │   ├── backend/                # Inference Layer (FastAPI)
+│   │   ├── data/                   # Data Repository (Git Ignored)
+│   │   ├── docs/                   # Technical Knowledge Base
+│   │   ├── assets_1/               # Dataset 1: Behavioral Analytics
+│   │   ├── assets_2/               # Dataset 2: Market-Scale Data
+│   │   ├── notebooks_1/            # Research Kernels (Dataset 1)
+│   │   ├── notebooks_2/            # Research Kernels (Dataset 2)
+│   │   ├── requirements.txt        # Backend ML Dependencies
+│   │   └── start.ps1               # Windows-native Dev Environment Bootstrapper
+│   └── mobile/                     # Flutter Mobile App
 ├── .gitignore                      # Git Ignore File
+├── README.md                       # Documentation
 └── render.yaml                     # Render Configuration File
 ```
 

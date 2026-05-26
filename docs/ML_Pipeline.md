@@ -17,12 +17,12 @@ Our architecture operates on a "Safety First" principle. In credit risk, a model
 We handled two distinct datasets, each presenting unique challenges. Understanding their schemas is the first step in the pipeline.
 
 ### Dataset 1: Internal Banking Risk (v1)
-*   **Source**: `data/application_data.csv`
+*   **Source**: `apps/ml-backend/data/application_data.csv`
 *   **Goal**: Predict repayment for a smaller, high-overlap customer base.
 *   **Total Records**: 1,000
-*   **Assets**: [assets_1/](../assets_1/)
+*   **Assets**: [assets_1/](../apps/ml-backend/assets_1/)
 
-![Dataset 1 Correlation](../assets_1/eda/correlation_matrix.png)
+![Dataset 1 Correlation](../apps/ml-backend/assets_1/eda/correlation_matrix.png)
 
 | Feature            | Type        | Range / Possible Values            |
 | :----------------- | :---------- | :--------------------------------- |
@@ -36,12 +36,12 @@ We handled two distinct datasets, each presenting unique challenges. Understandi
 | **`Default`**      | **Binary**  | **0 (No) / 1 (Yes)**               |
 
 ### Dataset 2: External Market Scale (v2)
-*   **Source**: `data/Loan_default.csv`
+*   **Source**: `apps/ml-backend/data/Loan_default.csv`
 *   **Goal**: Large-scale prediction across 255k+ records with deep categorical insight.
 *   **Total Records**: 255,347
-*   **Assets**: [assets_2/](../assets_2/)
+*   **Assets**: [assets_2/](../apps/ml-backend/assets_2/)
 
-![Dataset 2 Correlation](../assets_2/eda/correlation_matrix.png)
+![Dataset 2 Correlation](../apps/ml-backend/assets_2/eda/correlation_matrix.png)
 
 | Feature          | Type        | Possible Values / Ranges                        |
 | :--------------- | :---------- | :---------------------------------------------- |
@@ -112,14 +112,14 @@ To truly understand the "Sweet Spot," we look at two critical charts we've gener
 ### 1. The Model Battle (Line Chart)
 We use a high-resolution line chart to see how metrics overlap.
 *   **Signal**: You can see **Recall** climbing as we move from XGBoost to Logistic Regression.
-*   **File**: `assets_2/eval/model_performance_comparison.png`
+*   **File**: `apps/ml-backend/assets_2/eval/model_performance_comparison.png`
 
-![Performance Comparison](../assets_2/eval/model_performance_comparison.png)
+![Performance Comparison](../apps/ml-backend/assets_2/eval/model_performance_comparison.png)
 
 ### 2. The Threshold Benchmark (The Dial)
 We don't accept the default 0.5 threshold. We "turn the dial" to **0.35**. 
 
-![Threshold Optimization](../assets_2/eval/f1_optimization.png)
+![Threshold Optimization](../apps/ml-backend/assets_2/eval/f1_optimization.png)
 
 #### Finding the "Sweet Spot"
 Finding the optimal threshold is a clinical trade-off analysis. For credit risk, we prioritized **Recall** (catching defaults) over **Precision** (avoiding false alarms). The following data from our `metrics_log.csv` shows the journey of the Logistic Regression model:
@@ -140,7 +140,7 @@ At the default 0.50, our safety (Recall) was too low. At 0.30, our reliability (
 
 **Selected Model Confusion Matrix (Threshold 0.35):**
 
-![Logistic Regression Confusion Matrix](../assets_2/eval/Logistic_Regression_cm_0.35.png)
+![Logistic Regression Confusion Matrix](../apps/ml-backend/assets_2/eval/Logistic_Regression_cm_0.35.png)
 
 > [!NOTE]
 > **Analogy: The Airport Security Checkpoint**

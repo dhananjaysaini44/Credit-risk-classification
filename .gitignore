@@ -4,26 +4,26 @@ __pycache__/
 *$py.class
 
 # Data (Never commit large raw data or sensitive user data to GitHub)
-data/
+apps/ml-backend/data/
 
 # Model Assets (Managed tracking via whitelist)
-assets_1/**
-assets_2/**
+apps/ml-backend/assets_1/**
+apps/ml-backend/assets_2/**
 
 # Un-ignore directories so Git can traverse them to find whitelisted files
-!assets_1/**/
-!assets_2/**/
+!apps/ml-backend/assets_1/**/
+!apps/ml-backend/assets_2/**/
 
 # Whitelist: Documentation Dependencies (Used in ML_Pipeline.md)
-!assets_1/eda/correlation_matrix.png
-!assets_2/eda/correlation_matrix.png
-!assets_2/eval/model_performance_comparison.png
-!assets_2/eval/f1_optimization.png
-!assets_2/eval/Logistic_Regression_cm_0.35.png
+!apps/ml-backend/assets_1/eda/correlation_matrix.png
+!apps/ml-backend/assets_2/eda/correlation_matrix.png
+!apps/ml-backend/assets_2/eval/model_performance_comparison.png
+!apps/ml-backend/assets_2/eval/f1_optimization.png
+!apps/ml-backend/assets_2/eval/Logistic_Regression_cm_0.35.png
 
 # Whitelist: Production Models (Primary Dataset Architecture)
-!assets_2/models/
-!assets_2/models/*.pkl
+!apps/ml-backend/assets_2/models/
+!apps/ml-backend/assets_2/models/*.pkl
 
 # Ensure .gitkeep files are never ignored
 !**/.gitkeep
@@ -43,19 +43,17 @@ env/
 Thumbs.db
 
 # Dependencies
-/node_modules
-/.pnp
+node_modules/
+.pnp
 .pnp.*
 
 # Testing
-/coverage
+coverage/
 
 # Next.js
-/.next/
-/out/
-
-# Production
-/build
+.next/
+out/
+build/
 
 # Misc
 *.pem
@@ -76,8 +74,9 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
 # Documentation & Notebooks
-notebooks_1/Project.ipynb
+apps/ml-backend/notebooks_1/Project.ipynb
 
 # Temporary Scratch Scripts
-scratch/
+apps/ml-backend/scratch/

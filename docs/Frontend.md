@@ -63,7 +63,7 @@ On mobile, the `RiskForm` inputs use larger tap targets and the semantic buttons
 ## 5. The Interactive Pipeline (Step-by-Step)
 
 ### Step 1: Design Token Initialization
-Rather than using arbitrary colors, we extended `tailwind.config.ts` to include specific semantic keys.
+Rather than using arbitrary colors, we extended `apps/web/tailwind.config.ts` to include specific semantic keys.
 *   **Why?** This ensures that if we decide to change the "Safe Glow" intensity, we update one variable instead of hunting through 50 components.
 
 ### Step 2: Orchestrated Storytelling (GSAP)
