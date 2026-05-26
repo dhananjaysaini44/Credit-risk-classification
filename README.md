@@ -1,6 +1,6 @@
 # Credit Risk Classification
 
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-15.5.15-000000?style=flat&logo=nextdotjs&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat&logo=fastapi&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white) ![Three.js](https://img.shields.io/badge/Three.js-r171-000000?style=flat&logo=threedotjs&logoColor=white) ![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwindcss&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.5.2-F7931E?style=flat&logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.1-20BEFF?style=flat&logo=xgboost&logoColor=white) ![KNN](https://img.shields.io/badge/KNN-v2.1-yellow?style=flat&logo=analytics&logoColor=white) ![Framer_Motion](https://img.shields.io/badge/Framer_Motion-12.0-0055FF?style=flat&logo=framer&logoColor=white) ![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=flat&logo=greensock&logoColor=white) ![Zustand](https://img.shields.io/badge/Zustand-State-433923?style=flat&logo=react&logoColor=white) ![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?style=flat&logo=render&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=flat&logo=vercel&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white) ![Next.js](https://img.shields.io/badge/Next.js-15.5.15-000000?style=flat&logo=nextdotjs&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat&logo=fastapi&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white) ![Three.js](https://img.shields.io/badge/Three.js-r171-000000?style=flat&logo=threedotjs&logoColor=white) ![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=flat&logo=tailwindcss&logoColor=white) ![Flutter](https://img.shields.io/badge/Flutter-3.43.0--beta-02569B?style=flat&logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-3.12.0--beta-0175C2?style=flat&logo=dart&logoColor=white) ![Riverpod](https://img.shields.io/badge/Riverpod-State-02569B?style=flat&logo=flutter&logoColor=white) ![Go_Router](https://img.shields.io/badge/Go_Router-Navigation-blue?style=flat&logo=flutter&logoColor=white) ![Scikit--Learn](https://img.shields.io/badge/Scikit--Learn-1.5.2-F7931E?style=flat&logo=scikit-learn&logoColor=white) ![XGBoost](https://img.shields.io/badge/XGBoost-2.1-20BEFF?style=flat&logo=xgboost&logoColor=white) ![KNN](https://img.shields.io/badge/KNN-v2.1-yellow?style=flat&logo=analytics&logoColor=white) ![Framer_Motion](https://img.shields.io/badge/Framer_Motion-12.0-0055FF?style=flat&logo=framer&logoColor=white) ![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?style=flat&logo=greensock&logoColor=white) ![Zustand](https://img.shields.io/badge/Zustand-State-433923?style=flat&logo=react&logoColor=white) ![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?style=flat&logo=render&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=flat&logo=vercel&logoColor=white)
 
 ## Overview
 This project is a high-fidelity, full-stack Credit Risk Classification platform. It bridges the gap between raw data science and premium user experiences. Using an AI-driven predictive pipeline, the application classifies loan applicant default risks while providing a cinematic, interactive storytelling layer built with modern web technologies.
@@ -9,7 +9,8 @@ This project is a high-fidelity, full-stack Credit Risk Classification platform.
 - **Cinematic Interactive UI**: A high-end scrolling experience powered by GSAP and Lenis for smooth, frame-based storytelling.
 - **Real-Time Risk Engine**: High-concurrency FastAPI backend providing sub-100ms inference for credit probability analysis.
 - **Advanced ML Pipeline**: Implementation of SMOTE balancing, Robust Scaling, and Optimized XGBoost ensembles.
-- **Mobile-Responsive Interface**: Fully optimized for diverse display architectures, ensuring a seamless experience across all device classes.
+- **Mobile-Responsive Interface**: Fully optimized Next.js dashboard for diverse display architectures.
+- **Cross-Platform Mobile App**: A dedicated, compiled iOS & Android client built with Flutter, Riverpod, and GoRouter featuring a system-adaptive light/dark cyberpunk design.
 - **Unified Development**: Single-command startup for both frontend and backend environments.
 
 ## Live Deployment
@@ -40,13 +41,26 @@ cd apps/ml-backend
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the live dashboard.
 
+### Running the Mobile Client
+Ensure you have the Flutter SDK configured. Then execute:
+```bash
+cd apps/mobile
+flutter pub get
+flutter run
+```
+
 ## Project Architecture
 ```text
 Credit-risk Classification/
 ├── apps/
 │   ├── web/                        # Next.js 15 Cinematic Frontend
 │   │   ├── public/                 # Static Media & 4K Frame Sequences
-│   │   ├── src/                    # App Router, Components, & Zustand Store
+│   │   ├── src/                    # Web Application Source
+│   │   │   ├── app/                # Next.js App Router (Layouts & Pages)
+│   │   │   ├── components/         # Cinematic & Interactive UI Elements
+│   │   │   │   ├── cinematic/      # Scroll-driven frame animation panels
+│   │   │   │   └── interactive/    # Credit assessment form & gauge displays
+│   │   │   └── store/              # Zustand global state management
 │   │   └── package.json            # Web Development Scripts & NPM Packages
 │   ├── ml-backend/                 # Python FastAPI & ML Pipeline
 │   │   ├── backend/                # Inference Layer (FastAPI)
@@ -58,7 +72,15 @@ Credit-risk Classification/
 │   │   ├── notebooks_2/            # Research Kernels (Dataset 2)
 │   │   ├── requirements.txt        # Backend ML Dependencies
 │   │   └── start.ps1               # Windows-native Dev Environment Bootstrapper
-│   └── mobile/                     # Flutter Mobile App
+│   └── mobile/                     # Flutter Cross-Platform Mobile App
+│       ├── assets/                 # Logo and image asset files
+│       ├── lib/                    # Dart source code files
+│       │   ├── components/         # Reusable glassmorphic UI components
+│       │   ├── providers/          # Riverpod state notifier system
+│       │   ├── screens/            # Loading, Home, Form, and Result screens
+│       │   ├── theme/              # System-aware light/dark theme system
+│       │   └── main.dart           # App bootstrapped routing and themes
+│       └── pubspec.yaml            # Project package configuration file
 ├── .gitignore                      # Git Ignore File
 ├── README.md                       # Documentation
 └── render.yaml                     # Render Configuration File
