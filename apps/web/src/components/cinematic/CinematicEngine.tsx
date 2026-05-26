@@ -23,11 +23,11 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const planeRef = useRef<THREE.Mesh | null>(null);
   const texturesRef = useRef<Map<number, THREE.Texture>>(new Map());
-  
+
   // Animation state
   const targetFrame = useRef(0);
   const currentFrame = useRef(0);
-  
+
   // Device state
   const isMobile = useRef(false);
 
@@ -60,8 +60,8 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
     // Plane setup
     const geometry = new THREE.PlaneGeometry(2, 2);
     const material = new THREE.MeshBasicMaterial({
-       transparent: true,
-       opacity: 0.6,
+      transparent: true,
+      opacity: 0.6,
     });
     const plane = new THREE.Mesh(geometry, material);
     scene.add(plane);
@@ -80,10 +80,10 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
       // Lerp for smoothness
       const lerpFactor = isMobile.current ? 0.08 : 0.15;
       currentFrame.current += (targetFrame.current - currentFrame.current) * lerpFactor;
-      
+
       const frameIndex = Math.round(currentFrame.current);
       const texture = texturesRef.current.get(frameIndex);
-      
+
       if (texture && plane.material instanceof THREE.MeshBasicMaterial) {
         plane.material.map = texture;
         plane.material.needsUpdate = true;
@@ -119,20 +119,20 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
 
         // If it's one of the first 60, load it now
         if (i <= initialLimit) {
-           const texture = await new THREE.TextureLoader().loadAsync(url);
-           texture.minFilter = THREE.LinearFilter;
-           texturesRef.current.set(i - 1, texture);
-           loadedCount++;
-           setLoadProgress((loadedCount / initialLimit) * 100);
+          const texture = await new THREE.TextureLoader().loadAsync(url);
+          texture.minFilter = THREE.LinearFilter;
+          texturesRef.current.set(i - 1, texture);
+          loadedCount++;
+          setLoadProgress((loadedCount / initialLimit) * 100);
         } else {
-           // Lazy load strategy: Fetch on demand or in background chunks
-           // For simplicity in this version, we will background fetch remaining
-           setTimeout(() => {
-              new THREE.TextureLoader().load(url, (t) => {
-                 t.minFilter = THREE.LinearFilter;
-                 texturesRef.current.set(i - 1, t);
-              });
-           }, i * 10); // Throttle
+          // Lazy load strategy: Fetch on demand or in background chunks
+          // For simplicity in this version, we will background fetch remaining
+          setTimeout(() => {
+            new THREE.TextureLoader().load(url, (t) => {
+              t.minFilter = THREE.LinearFilter;
+              texturesRef.current.set(i - 1, t);
+            });
+          }, i * 10); // Throttle
         }
       }
     };
@@ -168,3 +168,4 @@ export default function CinematicEngine({ frameCount }: CinematicEngineProps) {
     </div>
   );
 }
+//EOF
